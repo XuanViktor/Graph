@@ -1,0 +1,90 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, m;
+int dem;
+vector<int> adj[1001];
+bool visited[1001];
+vector<pair<int,int>> edge;
+
+void input(){
+	cin >> n >> m;
+	for (int i = 0; i < m; i++){
+		int x,y; cin >> x >> y;
+		edge.push_back({x,y});
+		adj[x].push_back(y);
+		adj[y].push_back(x);
+	}
+	for (int i = 1; i <= n; i++){
+		sort(begin(adj[i]), end(adj[i]));
+	}
+}
+
+void bfs(int u, int s, int t){
+	queue<int> q;
+	visited[u] = true;
+	q.push(u);
+	while (!q.empty()){
+		int v = q.front(); q.pop();
+		//cout << v << " ";
+		for (int x : adj[v]){
+			if ((s == x && t == v) || (s == v && t == x)){
+				continue;
+			}
+			if (!visited[x]){
+				q.push(x);
+				visited[x] = true;
+			}
+		}
+	}
+}
+
+void dfs(int u, int s, int t){
+	visited[u] = true;
+	for (int v : adj[u]){
+		if ((s == u && t == v) || (s == v && t == u)){
+			continue;
+		}
+		if (!visited[v]){
+			dfs(v, s, t);
+		}
+	}
+}
+
+int tplt(int s, int t){
+	int count = 0;
+	for (int i = 1; i <= n; i++){
+		if (!visited[i]){
+			++count;
+			bfs(i, s, t); //bfs(i);
+		}
+	}
+	return count;
+}
+
+void canh_cau(){
+	int count = 0;
+	int cc = tplt(0,0); // so thanh phan lien thong ban dau
+	for (pair<int,int> e : edge){
+		int s = e.first, t = e.second;
+		memset(visited,false,sizeof(visited));
+		if (cc < tplt(s,t)){
+			cout << s << " " << t << endl;
+			++count;
+		}
+	}
+	cout << "Tong canh cau: " << count;
+}
+
+int main(){
+	input();
+	canh_cau();
+}
+
+10 6
+10 1
+5 2
+10 5
+10 6
+5 3
+10 4
