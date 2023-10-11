@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int n,m;
+bool taken[100001];
+vector<pair<int,int>> adj[100001];
+
+void nhap(){
+	cin >> n >> m;
+	for (int i = 0; i < m; i++){
+		int x,y,w; cin >> x >> y >> w;
+		adj[x].push_back({y,w});
+		adj[y].push_back({x,w});
+	}
+}
+
+void Prim(int s){
+	taken[s] = true; // nap vao MST
+	priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> Q;
+	
+	for (auto it : adj[s]){
+		int vertex = it.first;
+		if (!taken[vertex]){
+			Q.push({it.second, vertex});
+			// Q = {weight, next vertex)
+		}
+	}
+	long long sum_weight = 0, cnt = 0;
+	while (!Q.empty()){
+		// put out the edge shortest
+		pair<int, int> edge = Q.top(); Q.pop();
+		int v = edge.second, w = edge.first;
+		if (!taken[v]){
+			sum_weight += w;
+			++cnt;
+			taken[v] = true;
+			for (auto it : adj[v]){
+				if (!taken[it.first]){
+					Q.push({it.second, it.first});
+				}
+			}
+		}
+	}
+	if (cnt == n - 1) cout << sum_weight << endl;
+	else cout << "IMPOSSIBLE\n";
+}
+
+int main(){
+	nhap();
+	Prim(1);
+}
+
+5 6
+1 2 3
+2 3 5
+2 4 2
+3 4 8
+5 1 7
+5 4 4
