@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int n,m,cnt;
+vector<int> adj[100005];
+bool visited[100005];
+
+void input(){
+    cin >> n >> m;
+    for (int i = 1; i <= m; i++){
+        int x,y; cin >> x >> y;
+        adj[x].push_back(y);
+    }
+}
+
+void dfs(int u){
+    ++cnt; visited[u] = true;
+    for (int v : adj[u]){
+        if (!visited[v]){
+            dfs(v);
+        }
+    }
+}
+
+int main (){
+    input();
+
+    for (int i = 1; i <= n; i++){
+        cnt = 0;
+        memset(visited,false,sizeof(visited));
+        dfs(i);
+        if (cnt != n) { 
+            cout << "NO"; 
+            return 0;
+        }
+    }
+    cout << "YES";
+}
