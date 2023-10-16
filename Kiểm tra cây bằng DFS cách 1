@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// Kiểm tra có n - 1 cạnh
+// và tính liên thông
+// Thỏa mản 2 ý trên là cây
+
+int n,m,cnt;
+vector<int> adj[100005];
+bool visited[100005];
+
+void input(){
+    cin >> n >> m;
+    for (int i = 1; i <= m; i++){
+        int x,y; cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+}
+
+void dfs(int u){
+    ++cnt; visited[u] = true;
+    for (int v : adj[u]){
+        if (!visited[v]){
+            dfs(v);
+        }
+    }
+}
+
+int main (){
+    input();
+
+    dfs(1);
+    if (cnt == n && m == n - 1) cout << "YES";
+    else cout << "NO";  
+}
