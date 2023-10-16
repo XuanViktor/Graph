@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// Kiểm tra đồ thị không có chu trình
+// Kiểm tra đồ thị có n - 1 cạnh
+// Thỏa 2 ý trên là cây
+
+int n,m;
+vector<int> adj[100005];
+bool visited[100005];
+int parent[100005];
+bool flag = false;
+
+void input(){
+    cin >> n >> m;
+    for (int i = 1; i <= m; i++){
+        int x,y; cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+}
+
+void dfs(int u){
+    visited[u] = true;
+    for (int v : adj[u]){
+        if (!visited[v]){
+            parent[v] = u;
+            dfs(v);
+        }
+        else if (visited[v] && v != parent[u]){
+            flag = true;
+            return;
+        }
+    }
+}
+
+int main (){
+    input();
+
+    dfs(1);
+    if (!flag && m == n - 1) cout << "YES";
+    else cout << "NO";  
+}
