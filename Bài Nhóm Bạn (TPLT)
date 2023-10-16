@@ -1,0 +1,63 @@
+Bài Nhóm bạn
+Trong một lớp học luôn tồn tại những nhóm bạn học sinh, các bạn trong nhóm này sẽ thân thiết với nhau hơn.
+Giả sử trong 1 nhóm nếu bạn a chơi thân với bạn b và bạn b thân với bạn c thì bạn a và ban c cũng sẽ chơi thân với nhau. 
+Hiện nay Tèo là lớp trường lớp 10A1, vì không thích việc chia bè nên Tèo quyết định tìm ra nhóm có số bạn chơi thân với nhau nhiều nhất 
+trong nhóm để đưa các thành viên của các nhóm khác vào trong nhóm có số lượng thành viên cao nhất này.
+
+Input
+Dòng đầu tiên là n và m, tương ướng với số lượng học sinh trong lớp và số lượng tình bạn giữa các bạn trong lớp. 
+Các học sinh được đánh số từ 1 đến n. M dòng tiếp theo mỗi dòng gồm 2 số a,b thể hiện tình bạn thân thiết giữa bạn a và bạn b, a và b khác nhau
+
+Output
+In ra nhóm có số lượng bạn lớn nhất
+
+Sample
+Input   Output
+10 6      7
+8 2
+4 1
+8 6
+8 7
+8 1 
+8 5
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int n,m,cnt = 0;
+vector<int> adj[100005];
+bool visited[100005];
+
+void input(){
+    cin >> n >> m;
+    for (int i = 1; i <= m; i++){
+        int x,y; cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+}
+
+void dfs(int u){
+    ++cnt;
+    visited[u] = true;
+    for (int v : adj[u]){
+        if (!visited[v]){
+            dfs(v);
+        }
+    }
+}
+
+int main (){
+    input();
+
+    int res = 1;
+    for (int i = 1; i <= n; i++){
+        if (!visited[i]){
+            cnt = 0;
+            dfs(i);
+            res = max(res,cnt);
+        }
+    }
+    cout << res;
+}
+
