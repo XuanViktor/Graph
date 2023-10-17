@@ -1,0 +1,73 @@
+Bài Đường đi trong mê cung
+Cho mê cung A có b hàng, n cột. Một con chuột xuất phát từ ô (s,t) và di chuyển tới ô (u,v). 
+Nhiệm vụ của bạn là xác định số bước đi tối thiểu để con chuột có thể di chuyển từ ô (s,t) tới ô (u,v) hoặc xác định rằng không tìm thấy đường đi tới ô (u,v). 
+Mê cung A chỉ bao gồm các số 1 và số 0. Trong đó 1 đại diện cho đường đi và 0 đại diện cho vật cản, 
+con chuột chỉ có thể di chuyển từ ô hiện tại sang các ô chung đỉnh với nó và có đường đi
+
+
+Input
+Dòng đầu tiên là n. Dòng thứ 2 gồm 4 số nguyên s,t,u,v. Dữ liệu đảm bảo ô (s,t) có giá trị 1. N dòng tiếp theo, mỗi dòng gồm N số nguyên mô tả mê cung A.
+
+Output
+In ra số bước đi tối thiểu của con chuột hoặc in ra -1 nêu con chuột không thể đi đến nơi
+
+Sample
+Input                      Output
+10
+9 6 9 3                      3
+1 1 0 1 1 1 1 0 0 1          
+0 0 1 0 0 1 0 1 0 1
+1 1 1 1 0 0 0 1 1 0
+1 0 0 0 1 0 0 0 1 1
+1 0 1 0 0 1 0 1 1 0
+0 0 1 1 0 1 0 0 0 0
+1 1 0 1 0 1 1 0 0 0
+0 0 0 1 1 0 1 1 0 1
+1 0 1 0 0 1 0 0 1 1
+0 1 1 1 1 0 1 0 1 1
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, s,t,u,v;
+int a[10005][10005];
+pair<int,int> path[8] = {{-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1}}; // 8 pixel
+#define  fi first
+#define  se second
+
+void input(){
+    cin >> n;
+    cin >> s >> t >> u >> v;
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= n; j++){
+            cin >> a[i][j];
+        }
+    }
+}
+
+int bfs(){
+    // lưu ({i,j},số lần)
+    queue<pair<pair<int,int>,int>> q;
+    q.push({{s,t},0}); // thêm vào queue
+    a[s][t] = 0; // đánh dấu đã duyệt rồi
+    while (!q.empty()){
+        auto it = q.front(); q.pop(); // lấy thằng đầu queue;
+        int i = it.fi.fi, j = it.fi.se, d = it.se;
+        if (i == u && j == v) return d; // nếu duyệt đến thằng (u,v) con chuột đã đến đích
+        for (int k = 0; k < 8; k++){
+            int i1 = i + path[k].fi;
+            int j1 = j + path[k].se;
+            if (i1 >= 1 && i1 <= n && j1 >= 1 && j1 <= n && a[i1][j1]){
+                q.push({{i1,j1},d + 1});
+                a[i1][j1] = 0;
+            }
+        } 
+
+    }
+    return -1;
+}
+
+int main(){
+    input();
+    cout << bfs();
+}
