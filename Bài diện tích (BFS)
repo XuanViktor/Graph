@@ -1,0 +1,78 @@
+Bài Diện tích
+Bạn được cung cấp một lưới 2D. Dấu '#' đại diện cho chướng ngại vật và dấu '.' đại diên cho không gian trống. 
+Bạn cần tìm các khu vực của các thành phần bị ngắt kết nối biết rằng cách tìm là đi chung cạnh
+
+
+Input
+Dòng đầu tiên là n và m, tương ứng với số dòng và số cột của lưới 2D. N dòng tiếp theo, mỗi dòng là m kí tự '#' hoặc '.'
+
+Output
+In ra diện tích các vùng không gia trống liền kề trên 1 dòng
+
+Sample
+ 
+Input                      Output
+10 10               1 1 8 1 11 1 17 9 1 1
+###.#.#..#
+.######...
+###..##.#.
+.##...###.
+##....#..#
+.#..###...
+..####.##.
+...##.....
+..#...####
+.#..##.##.
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, m;
+char a[10005][10005];
+pair<int,int> path[4] = {{-1,0}, {0,-1}, {0,1}, {1,0}}; // edge
+#define  fi first
+#define  se second
+
+void input(){
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= m; j++){
+            cin >> a[i][j];
+        }
+    }
+}
+
+int bfs(int i, int j){
+    // lưu ({i,j},số lần)
+    queue<pair<int,int>> q;
+    q.push({i,j}); // thêm vào queue
+    a[i][j] = '#'; // đánh dấu đã duyệt rồi
+    int cnt = 0;
+    while (!q.empty()){
+        auto it = q.front(); q.pop(); // lấy thằng đầu queue;
+        int i = it.fi, j = it.se;
+        cnt++;
+        for (int k = 0; k < 4; k++){
+            int i1 = i + path[k].fi;
+            int j1 = j + path[k].se;
+            if (i1 >= 1 && i1 <= n && j1 >= 1 && j1 <= m && a[i1][j1] == '.'){
+                q.push({i1,j1});
+                a[i1][j1] = '#';
+            }
+        } 
+
+    }
+    return cnt;
+}
+
+int main(){
+    input();
+
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= m; j++){
+            if (a[i][j] == '.'){
+                cout << bfs(i,j) << " ";
+            }
+        }
+    }
+}
