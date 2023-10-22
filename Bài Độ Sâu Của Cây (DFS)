@@ -1,0 +1,64 @@
+Độ Sâu Của Cây
+Cho cây với đỉnh gốc là là đỉnh 1. Các đỉnh của cây được đánh số từ 1 tới n. 
+Độ cao của một nốt trong cây được tính bằng số cạnh trên đường đi ngắn nhất giữa
+nốt này tới đỉnh gốc. Như vậy, gốc của cây là đỉnh 1 sẽ có độ cao là 0.
+Nhiệm vụ của bạn là hãy xác định chiều cao của mọi nốt trong cây.
+
+INPUT
+Dòng đầu tiên là số n - số nốt của cây. N - 1 dòng tiếp theo mỗi dòng mô tả
+một cạnh của cây.
+
+Constraints
+(1 <= N <= 1000)
+
+OUTPUT
+In ra độ cao của các nốt, từ 1 tới nốt n.
+
+Sample Input     Output
+
+  7            0 1 2 3 1 2 1
+  1 2
+  2 3
+  3 4
+  1 5
+  5 6
+  1 7
+
+#include <bits/stdc++.h>
+using namespace std;
+
+const int MAXN = 2000;
+vector<int> adj[MAXN];
+int depth[MAXN], n;
+bool visited[MAXN];
+
+void input(){
+    cin >> n;
+    for (int i = 0; i < n - 1; i++){
+        int x, y; cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+}
+
+void dfs(int u) {
+    visited[u] = true;
+    for (int v : adj[u]) {
+        if (!visited[v]){
+            depth[v] = depth[u] + 1;
+            dfs(v);
+        }
+    }
+}
+
+int main(){
+    input();
+
+    depth[1] = 0;
+    dfs(1);
+    for (int i = 1; i <= n; i++){
+        cout << depth[i] << " ";
+    }
+}
+
+
