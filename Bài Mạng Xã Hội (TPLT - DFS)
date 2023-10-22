@@ -1,0 +1,66 @@
+Mạng Xã Hội
+Tý đang xây dựng một mạng xã hội và mời các bạn của mình dùng thử. Bạn của bạn cũng là bạn.
+Vì vậy. Tý muốn mạng xã hội của mình là hoàn hảo, tức là với mọi bộ ba X,Y,Z, 
+nếu X kết bạn với y, Y kết bạn với Z thì X và Z cũng là bạn bè của nhau trên mạng xã hội.
+Các bạn hãy xác định xem mạng xã hội hiện tại của Tý có là hoàn hảo hay không ?. 
+Nếu có hãy in ra YES, NO trong trường hợp ngược lại
+
+INPUT
+Mỗi test bắt đầu bởi 2 số nguyên N và M. M dòng tiếp theo, mỗi dòng gồm 2 số nguyen
+u và v (u # v) cho biếu u và v là kết bạn với nhau trên mạng xã hội của Tý
+
+Constraints
+1 <= N, M <= 100 000
+
+OUTPUT
+In ra kết quả của bài toán
+
+Sample Input   Output
+   4 3           YES
+   1 3
+   3 4
+   1 4
+
+#include <bits/stdc++.h>
+using namespace std;
+
+const int MAXN = 100005;
+int n, m; 
+bool visited[MAXN];
+int cnt = 0;
+vector<int> adj[MAXN];
+
+void input(){
+    cin >> n >> m;
+    for (int i = 0; i < m; i++){
+        int x,y; cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+}
+
+void dfs(int u){
+    ++cnt; visited[u] = true;
+    for (int v : adj[u]){
+        if (!visited[v]){
+            dfs(v);
+        }
+    }
+}
+
+int main(){
+    input();
+
+    int perfect_edge = 0;
+    for (int i = 1; i <= n; i++){
+        if (!visited[i]){
+            cnt = 0;
+            dfs(i);
+            perfect_edge += cnt*(cnt-1)/2;
+        }
+    }
+    if (m == perfect_edge) cout << "YES";
+    else cout << "NO";
+}
+
+
