@@ -1,0 +1,80 @@
+Bài tìm nhóm trường
+Trong một lớp học luôn tồn tại những nhóm bạn học sinh, các bạn trong nhóm này sẽ thân thiết với nhau hơn. 
+Giả sử trong 1 nhóm nếu bạn a chơi thân với bạn b và bạn b thân với bạn c thì bạn a và ban c cũng sẽ chơi thân với nhau. 
+Hiện nay Tèo là lớp trường lớp 10A1, vì không thích việc chia bè nên Tèo quyết định tìm ra nhóm trưởng 
+là người có nhiều quan hệ thân thiết với các thành viên khác trong nhóm nhất và là người có số thứ tự nhỏ nhất. 
+Nếu một bạn nào đó không chơi với ai cả thì bạn đó là nhóm trưởng của chính mình. Bạn hãy giúp tèo in ra thứ tự của các trường nhóm theo thứ tự từ bé đến lớn
+
+Input
+Dòng đầu tiên là n và m, tương ướng với số lượng học sinh trong lớp và số lượng tình bạn giữa các bạn trong lớp. 
+Các học sinh được đánh số từ 1 đến n. M dòng tiếp theo mỗi dòng gồm 2 số a,b thể hiện tình bạn thân thiết giữa bạn a và bạn b, a và b khác nhau
+
+Output
+In ra nhóm các nhóm trưởng từ bé đến lớn
+
+Sample
+Input   Output
+10 6   4 7 9 10
+4 3
+4 1
+8 5
+8 6
+4 2
+8 2
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, m, parent[1005], degree[1005];
+
+void init(){
+    cin >> n >> m;
+    for(int i = 1; i <= n; i++){
+        parent[i] = i; // cho tất cả đại diện các đỉnh là chính nó
+    }
+}
+
+int Find(int u){
+    if (u == parent[u]) return u; // Nếu đại diện u cũng chính là u
+    return parent[u] = Find(parent[u]); // lần tìm đại diện của u
+}
+
+void Union(int x, int y){
+    x = Find(x); // Tìm đại diện của x
+    y = Find(y); // Tìm đại diện của y
+    if (x == y) return; // Nếu 2 thằng cùng đại diện thì không union được
+    else{
+        // Nếu mối quan hệ x lớn hơn y hoặc (mqh x == y nhưng x có thứ tự nhỏ hơn y)
+        if (degree[x] > degree[y] || (degree[x] == degree[y] && x < y)){
+            // Cho thằng x là nhóm trưởng của y
+            parent[y] = x;
+        }
+        else{
+            // Ngược lại cho thằng y là nhóm trưởng của x
+            parent[x] = y;
+        }
+    }
+}
+
+int main(){
+    init();
+
+    vector<pair<int,int>> edge;
+    for (int i = 0; i < m; i++){
+        int x, y; cin >> x >> y;
+        edge.push_back({x,y});
+        // đếm cái mối quan hệ từng thành viên trong nhóm
+        degree[x]++; degree[y]++;
+    }
+
+    for (auto x : edge){
+        Union(x.first, x.second);
+    }
+
+    // Duyệt tất cả các đỉnh nếu đỉnh nào
+    // Vẫn là đại diện của chính nó chửng tó nó là
+    // Đại diện của tplt đó
+    for (int i = 1; i <= n; i++){
+        if (i == parent[i]) cout << i << " ";
+    }
+}
