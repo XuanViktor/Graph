@@ -1,0 +1,24 @@
+Sửa Đường
+Ở Một vùng đất có n thành phố và m đường giữa chúng. Thật không may, tình trạng 
+của những con đường quá kém nên chúng không thể được sử dụng. Nhiệm vụ của bạn là sửa một số con đường,
+để có một con đường tốt giữa hai thành phố bất kì. Đối với mỗi con đường, bạn biết chí phí sửa chữa của nó và bạn nên tìm giải pháp sao cho tổng chi phí càng nhỏ càng tốt.
+
+INPUT
+Dòng đầu tiên có hai số nguyên n và m. Số thành phố và đường. Các thành phố được đánh số 1,2,..n. Sau đó, có m dòng mô tả các con đường. Mỗi dòng có ba số nguyên a,b và c: 
+có một con đường giữa các thành phố a và b, và chi phí sửa chữa của nó là c. Tất cả các con đường đều là đường hai chiều. Mọi con đường đều nằm giữa hai thành phố khác nhau và có nhiều nhất một con đường giữa hai thành phố.
+
+Constraints
+1 <= N <= 10^5, 1 <= m <= 2.10^5, 1 <= a,b <= n, 1 <= c <= 10^9
+
+OUTPUT
+In một số nguyên: tổng chi phí sửa chữa tối thiểu. Nếu không có giải pháp nào
+hãy in "IMPOSSIBLE"
+
+Sample Input   Output
+   5 6
+   1 2 3
+   2 3 5
+   2 4 2
+   3 4 8
+   5 1 7
+   5 4 4
