@@ -1,0 +1,21 @@
+Sửa Đường
+Ở Một vùng đất có n thành phố và ban đầu không có đường giữa chúng. Tuy nhiên, mỗi ngày một con đường mới sẽ được xây dựng và sẽ có tổng cộng m con đường. 
+Một cụm thành phố là một nhóm các thành phố trong đó có một tuyến đường giữa hai thành phố bất kỳ bằng cách sử dụng các con đường. 
+Sau mỗi ngày, nhiệm vụ của bạn là tìm ra số lượng cụm thành phố và kích thước của cụm thành phố lớn nhất.
+
+INPUT
+Dòng đầu tiên có hai số nguyên n và m. Số thành phố và đường. Các thành phố được đánh số 1,2,..n. Sau đó, có m dòng mô tả các con đường mới. 
+Mỗi dòng có hai số nguyên a và b, một con đường mới được xây dựng giữa các thành phố a và b. Bạn có thể cho rằng mọi con đường sẽ được xây dựng giữa hai thành phố khác nhau.
+
+Constraints
+1 <= N <= 10^5, 1 <= m <= 2.10^5, 1 <= a,b <= n
+
+OUTPUT
+In m dòng: thông tin cần thiết sau mỗi ngày
+
+Sample Input   Output
+    5 3         4 2
+    1 2         3 3
+    1 3         2 3
+    4 5         
+
