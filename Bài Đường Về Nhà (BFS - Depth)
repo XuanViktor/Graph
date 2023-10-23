@@ -1,0 +1,83 @@
+Link Submit: https://codeforces.com/group/J9XVs25cLt/contest/478464/problem/B
+B. Đường về nhà
+
+Vana đang trên đường bắt xe bus từ Hà Nội về nhà, các trạm bus trên đường đi được đánh số từ 1 đến n. 
+Nhà của Vana ở điểm bus thứ n và bây giờ Vana sẽ xuất phát từ điểm 1. 
+Đường đi này của Vana có một chút đặc biệt, Vana có thể di chuyển sang một điểm ở bên phải nếu khoảng cách giữa hai điểm không quá d. 
+Điều đó có nghĩa là nếu đang ở điểm x Vana có thể di chuyển đến x+a, với a là một số nguyên từ 1 đến d.
+
+Được biết với mỗi điểm từ 1 đến n có thể có một bông hoa Mely ở đó. Vana chỉ thích đi qua những điểm có hoa Mely thôi nên điểm nào không có hoa Mely thì Vana không đi đâu. 
+Giả thiết đảm bảo rằng có hoa Mely ở điểm 1 và n.
+Xác định số điểm nhỏ nhất mà Vana cần đi qua để về nhà tại điểm n với điểm xuất phát là điểm 1. Nếu Vana không thể về nhà in ra-1.
+
+Input
+Dòng đầu tiên gồm 2 số nguyên n và d (2≤n≤100, 1≤d≤n−1) — điểm bus tới nhà Vana và khoảng cách tối đa Vana có thể di chuyển giữa hai điểm bus.
+Dòng thứ hai chứa xâu s độ dài n, chỉ chứa 0 và 1. Nếu kí tự thứ i trong xâu s là 0 tương đương với việc điểm đó không có hoa Mely, ngược lại nếu là 1 thì điểm đó có hoa Mely. 
+Giả thiết đảm bảo rằng kí tự đầu tiên và cuối cùng của s là 1.
+
+Output
+Nếu Vana không thể về nhà in ra -1.
+Trường hợp còn lại in ra số điểm nhỏ nhất Vana cần qua để có thể về được nhà tại điểm n khi xuất phát tại điểm 1.
+
+Examples
+inputCopy
+9 3
+101101101
+outputCopy
+3
+inputCopy
+5 1
+10101
+outputCopy
+-1
+Note
+Trong ví dụ thứ nhất Vana có thể về nhà với 3 điểm bus cần đi qua:
+lần 1 đi từ 1 tới 4 (khoảng cách giữa hai điểm là 3), 
+lần thứ hai từ 4 đến 7 (khoảng cách giữa hai điểm là 3), 
+lần thứ 3 đi từ điểm 7 đến 9 (khoảng cách giữa hai điểm là 2).
+Trong ví dụ thứ 2 Vana không thể về được nhà bởi vì các điểm bus có hoa Mely trên đường về nhà đều có khoảng cách là 2 mà khoảng cách tối đa Vana có thể di chuyển được là 1.
+
+#include <bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+vector<vector<int>> adj;
+vector<bool> visited;
+vector<int> level;
+
+void bfs(int st){
+    visited[st] = true;
+    queue<int> q;
+    q.push(st);
+    while (!q.empty()){
+        int u = q.front(); q.pop();
+        for (auto v : adj[u]){
+            if (!visited[v]){
+                visited[v] = true;
+                level[v] = level[u] + 1;
+                q.push(v);
+            }
+        }
+    }
+}
+
+int main(){
+    int n, d;
+    cin >> n >> d;
+    string s; cin >> s;
+
+    adj.resize(n);
+    visited.resize(n, false);
+    level.resize(n,0);
+    for (int i = 0; i < n; i++){
+        for (int j = i + 1; j <= i + d; j++){
+            if (j < n && s[i] == s[j] && s[i] == '1'){
+                adj[i].emplace_back(j);
+                adj[j].emplace_back(i);
+            }
+        }
+    }
+    bfs(0);
+    if (visited[n-1]) cout << level[n-1] << "\n";
+    else cout << -1 << "\n";
+}
