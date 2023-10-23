@@ -1,0 +1,32 @@
+Mèo Tom
+Chú mèo Tom đang ở gốc 1 cây với nhiều lá và cành. Cái cây này có rất nhiều lá
+và các đỉnh trung gian. Ở các nốt lá có treo các con cá. Mèo Tom mong muốn ăn
+được nhiều cá nhất có thể vì thế nó dự định sẽ trèo từ gốc cây tương ứng với
+đỉnh 1 và đi lần lượt tới các nốt lá để ăn cá, nhưng trên đường đi từ nốt gốc tới nốt lá
+, Mèo Tom phải đi qua các nốt trung gian. Các nốt trung gian này sẽ có những con gián
+và Mèo Tom chỉ có thể đi đến các nốt lá để ăn cá nếu trên đường đi từ nốt gốc
+tới nốt lá có không quá m con gián liên tiếp. Bạn hãy giúp Tom đếm số cá tối đa
+mà nó có thể ăn được nhé.
+
+INPUT
+Dòng đầu tiên là số n và m, tương ứng với số lượng nốt của cây và số con gián liên tiếp. Dòng thứ 2 gồm n sẽ có giá trị 1 và 0, 
+tương ứng với vị trí ở nút thứ i có hoặc không có con gián. N - 1 dòng tiếp theo mỗi dòng là mô tả 1 cạnh của cây.
+
+Constraints
+(1 <= N <= 1000); (1 <= m <= n);
+
+OUTPUT
+In ra số con các tối đa Mèo Tom ăn được
+
+Sample Input          Output
+
+   7 1
+   1 0 1 1 0 0 0        2
+   1 2
+   1 3
+   2 4
+   2 5
+   3 6
+   3 7
+
+
