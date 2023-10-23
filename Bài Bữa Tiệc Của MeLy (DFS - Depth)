@@ -1,0 +1,76 @@
+Link Submit: https://codeforces.com/group/J9XVs25cLt/contest/478464/problem/A
+A. Bữa tiệc của CodeMely
+
+Tập đoàn CodeMely có nnhân viên được đánh số từ 1 đến n. Mỗi nhân viên không có quản lý trực tiếp hoặc có đúng một người quản lý trực tiếp. 
+Nhân viên A được gọi là cấp trên trực tiếp của nhân viên B nếu ít nhất một trong những điều sau là đúng:
+Nhân viên A là người quản lý trực tiếp của nhân viên B.
+Nhân viên B có một người quản lý trực tiếp là nhân viên C sao cho nhân viên A là cấp trên của nhân viên C.
+Ở CodeMely sẽ không tồn tại một nhân viên nào là cấp trên, quản lý trực tiếp mình.
+Hôm nay, CodeMely sẽ tổ chức một bữa tiệc. Điều này bao gồm việc chia tất cả n nhân viên thành một số nhóm sao cho mỗi nhân viên phải thuộc đúng một nhóm. 
+Hơn nữa, trong bất kỳ nhóm nào , không được có hai nhân viên A và B sao cho A là cấp trên của B. Hãy tính số nhóm tối thiểu cần phải được thành lập.
+
+Input
+Dòng đầu tiên chứa số nguyên n (1≤n≤2000) — số lượng nhân viên.
+n dòng tiếp theo chứa các số nguyên pi (1≤pi≤n hoặc pi=-1). 
+Mỗi pi biểu thị người quản lý trực tiếp của nhân viên thứ i. 
+Nếu pi là -1, điều đó có nghĩa là nhân viên thứ i không có người quản lý trực tiếp.
+Đảm bảo rằng, không có nhân viên nào sẽ là người quản lý trực tiếp của chính họ.(pi≠i)
+
+Output
+In một số nguyên duy nhất biểu thị số nhóm tối thiểu sẽ được thành lập.
+
+Examples
+inputCopy
+5
+4
+4
+2
+-1
+-1
+outputCopy
+3
+Note
+Ở ví dụ đầu tiên , số nhóm tối thiểu được thành lập là 3 nhóm, ví dụ:
+Nhân viên 4.
+Nhân viên 2 và 1.
+Nhân viên 3 và 5.
+
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> adj;
+int A[2005], depth[2005];
+
+void dfs(int u) {
+    for (int v : adj[u]) {
+        depth[v] = depth[u] + 1;
+        dfs(v);
+    }
+}
+
+int main() {
+    int n; cin >> n;
+    adj.resize(n + 1);
+
+    for (int i = 1; i <= n; i++) {
+        int x; cin >> x;
+        A[i] = x;
+        if (x != -1) {
+            adj[x].push_back(i);
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (A[i] == -1) {
+            depth[i] = 1;
+            dfs(i);
+        }
+    }
+
+    int ans = 0;
+    for (int i = 1; i <= n; i++) {
+        ans = max(ans, depth[i]);
+    }
+
+    cout << ans;
+}
