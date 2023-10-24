@@ -1,0 +1,90 @@
+Tìm cặp
+Bạn đượng cung cấp một cây gốc với các nút và nút 1 là gốc. Có một đường duy nhất giữa hai nút bất kỳ. 
+Nhiệm vụ của bạn phải tìm số lượng cặp i, j sao cho d(i,j) = d(1,i) - d(1,j).
+
+INPUT
+Dòng đầu tiên là số n là số lượng nút của cây. n - 1 dòng tiếp theo là các cạnh của cây
+Constraints
+(1 <= N <= 1000)
+
+OUTPUT
+In ra số lượng cặp (i,j) thỏa mãn yêu cầu của đề bài
+
+Sample Input          Output
+
+ 10                     51
+ 9 10
+ 5 9
+ 7 4
+ 4 5
+ 2 3
+ 6 7
+ 7 8
+ 3 6
+ 1 2
+
+ 4                      10
+ 1 2
+ 2 3
+ 3 4
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int MAXN = 100005;
+bool visited[MAXN];
+vector<int> adj[MAXN];
+int n, res = 0;
+
+void input(){
+    cin >> n;
+    for (int i = 0; i < n - 1; i++){
+        int x,y; cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    for (int i = 1; i <= n; i++){
+        sort(begin(adj[i]), end(adj[i]));
+    }
+}
+
+int dfs(int u){
+    int cnt = 1;
+    visited[u] = true; 
+    for (int v : adj[u]){
+        if (!visited[v]){
+            cnt = cnt + dfs(v);
+        }
+    }
+    cout << u << " " << cnt << endl;
+    res += cnt;
+    return cnt;
+}
+
+int main(){
+    input();
+    dfs(1);
+    cout << res;
+}
+
+Ta chỉ cần tìm tất cả các con của một đỉnh ví dụ đỉnh 2 gồm các con (2,4,5,7) vì khoảng cách d(i,j) = d(1,i) - d(1,j) chính là khoảng cách thẳng tử ngọn cho tới gốc
+Ví dụ ta có d(7,2) = d(1,7) - d(1,2) = 2 suy ra số lượng cặp là tổng các con của từng đỉnh.
+
+    1
+   / \
+  2   3
+ / \   \
+4   5   6
+   /
+  7
+
+4 1 đỉnh 1 có 1 con là chính nó
+7 1 đỉnh 7 có 1 con là chính nó
+5 2 đỉnh 5 có 2 con là 7 và chính nó
+2 4 đỉnh 2 có 4 con là 4,5,7 và chính nó
+6 1 đỉnh 6 có 1 con là chính nó
+3 2 đỉnh 3 có 2 con là 6 và chính nó
+1 7 đỉnh 1 có 7 con là 2,3,4,5,6,7 và chính nó
+18 Tổng khoản cách d(i,j) tìm được
+
