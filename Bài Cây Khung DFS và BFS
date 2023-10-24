@@ -1,0 +1,97 @@
+Cây khung DFS và BFS
+Cho đồ thị vô hướng G = (V,E) liên thông. Hãy in ra các cạnh của câu khung này theo thuật toán DFS bắt đầu từ đỉnh s. Thứ tự mở rộng cây khung của thuật toán DFS luôn mở rộng đỉnh có thử tự nhỏ hơn trước
+
+INPUT
+Dòng đầu tiên là số n, m và s tương ứng với số đỉnh, số cạnh và đỉnh gốc của cây khung. M dòng tiếp theo mỗi dòng là một cạnh của cây. Dữ liệu đảm bảo cạnh chỉ nối giữa 2 đỉnh khác nhau
+
+Constraints
+(1 <= S,N <= 1000); (1 <= m <= n*(n-1)/2);
+
+OUTPUT
+In ra các cạnh của cây khung theo thứ tự duyệt bằng thuật toán DFS theo từng dòng
+
+Sample Input          Output
+
+  7 12 3              3->2
+  6 3                 3->4
+  6 2                 3->5
+  5 3                 3->6
+  5 4                 3->7
+  7 3                 2->1
+  5 2
+  7 1
+  4 3
+  2 1
+  6 4
+  7 2
+  3 2
+
+  9 18 4             4->1
+  9 3                4->2
+  5 4                4->3
+  5 1                4->5
+  5 2                4->9
+  7 5                1->6
+  4 3                1->7
+  8 5                5->8
+  4 2
+  2 1
+  9 4
+  7 2
+  8 6
+  9 7
+  4 1
+  6 1
+  9 1
+  6 3
+  7 1
+
+#include <bits/stdc++.h>
+using namespace std;
+
+const int MAXN = 100005;
+bool visited[MAXN];
+vector<int> adj[MAXN];
+int n, m, st;
+
+void input(){
+    cin >> n >> m >> st;
+    for (int i = 0; i < m; i++){
+        int x,y; cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    for (int i = 1; i <= n; i++){
+        sort(begin(adj[i]), end(adj[i]));
+    }
+}
+
+void dfs(int u){
+    visited[u] = true;
+    for (int v : adj[u]){
+        if (!visited[v]){
+            cout << u << "->" << v << endl;
+            dfs(v);
+        }
+    }
+}
+
+void bfs(int st){
+    queue<int> q;
+    q.push(st); visited[st] = true;
+    while (!q.empty()){
+        int u = q.front(); q.pop();
+        for (int v : adj[u]){
+            if (!visited[v]){
+                cout << u << "->" << v << endl;
+                visited[v] = true;
+                q.push(v);
+            }
+        }
+    }
+}
+
+int main(){
+    input();
+    bfs(st);
+}
