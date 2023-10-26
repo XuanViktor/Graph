@@ -1,0 +1,93 @@
+Tìm đường
+Cho một bảng S[][] kích thước n x m, bao gồm các ô trống, các vật cản. Ban đầu bạn ở vị trí S. Nhiệm vụ của bạn là hãy di chuyển tới ví trí T, 
+sao cho số lần đổi hướng không quá hai lần. Các bạn có thể di chuyển từ 1 ô sang 4 ô chung cạnh với ô hiện tại và không có vật cản.
+
+INPUT
+Dòng đầu tiên gồm n và m.
+Dòng tiếp theo mỗi dòng gồm M kí tự mô tả bảng S. Trong đó '.' là một ô tróng '*' là vật cản, 'S' là vị trí xuất phát và 'T' là vị trí đích. (Chỉ có một vị trí S và T duy nhất).
+
+Constraints
+(1 <= N,M <= 1000)
+
+OUTPUT
+In ra YES nếu tìm được đường đi,  ngược lại in NO
+
+Sample Input          Output
+
+ 9 6
+ **.*..                NO
+ .**..T
+ .*..*.
+ .....*
+ ...***
+ ...*S.
+ *.....
+ ****..
+ .....*
+
+ 6 10                  YES
+ S...*...**
+ ...*.*....
+ ......*.T.
+ .........*
+ ...*.***..
+ ....*.*...
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+const int MAXN = 10005;
+
+int n, m, s1, s2, t1, t2;
+char a[MAXN][MAXN];      //trên    trái    phải   dưới
+pair<int,int> move0[4] = {{-1,0}, {0,-1}, {0,1}, {1,0}}; // edge
+int flag = 0;
+
+void input(){
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= m; j++){
+            cin >> a[i][j];
+            if (a[i][j] == 'S'){
+                s1 = i; s2 = j;
+            }
+            else if (a[i][j] == 'T'){
+                t1 = i; t2 = j;
+            }
+        }
+    }
+}
+
+void dfs(int i, int j, int k_prev, int cnt){
+    if (cnt > 3) return;
+    if (i == t1 && j == t2){
+        flag = 1;
+        return;
+    }
+    if (flag) return;
+
+    a[i][j] = '*';
+    for (int k = 0; k < 4; k++){
+        int i1 = i + move0[k].first;
+        int j1 = j + move0[k].second;
+        if (i1 >= 1 && i1 <= n && j1 >= 1 && j1 <= m && a[i1][j1] != '*'){
+            if (k_prev == k){
+                dfs(i1,j1,k,cnt);
+            }
+            else{
+                dfs(i1,j1,k,cnt+1);
+            }
+        }
+    }
+
+    a[i][j] = '.';
+}
+
+int main(){
+    input();
+    dfs(s1, s2, -1, 0);
+    if (flag) cout << "YES";
+    else cout << "NO";
+}
+
