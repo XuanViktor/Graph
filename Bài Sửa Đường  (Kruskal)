@@ -12,6 +12,15 @@ giữa 2 tp.
 
 In một số nguyên: Tổng chi phí sửa chữa tối thiểu. Nếu ko có giải pháp in "IMPOSSIBLE"
 
+INPUT       OUTPUT
+5 6        
+1 2 3
+2 3 5
+2 4 2
+3 4 8
+5 1 7
+5 4 4
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -72,8 +81,12 @@ void Kruskal(){
 		}
 	}
 	if (MST.size() < n - 1) cout << "IMPOSSIBLE\n";
-	else cout << sum_weight << endl;
-
+	else {
+		for (auto i : MST){
+            		cout << i.x << " " << i.y << " " << i.w << endl; 
+        	}
+		cout << sum_weight << endl;
+	}
 }
 
 int main(){
