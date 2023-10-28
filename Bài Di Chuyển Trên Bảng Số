@@ -1,0 +1,19 @@
+Cho một bảng số kích thước N x M. Chi phí khi đi qua ô (i,j) bằng A[i][j]. Nhiệm vụ của
+bạn là hãy tìm một đường đi từ ô (1, 1) tới ô (N, M) sao cho chi phí là nhỏ nhất. Tại mỗi ô,
+bạn được phép đi sang trái, sang phải, đi lên trên và xuống dưới.
+Input:
+Dòng đầu tiên là số lượng bộ test T (T ≤ 20).
+Mỗi test bắt đầu bởi hai số nguyên N và M (1 ≤ N, M ≤ 500).
+N dòng tiếp theo, mỗi dòng gồm M số nguyên A[i][j] (0 ≤ A[i][j] ≤ 9).
+Output:
+Với mỗi test, in ra một số nguyên là chi phí nhỏ nhất cho đường đi tìm được.
+
+Ví dụ:
+INPUT               OUTPUT
+6 7                  28
+0 3 6 0 5 9 1
+6 5 4 4 0 7 6
+4 0 2 1 5 6 1
+2 7 7 3 3 1 6
+4 4 9 6 9 7 2
+3 6 4 4 1 9 2
