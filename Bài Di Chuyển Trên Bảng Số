@@ -17,3 +17,51 @@ INPUT               OUTPUT
 2 7 7 3 3 1 6
 4 4 9 6 9 7 2
 3 6 4 4 1 9 2
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// lưu {cost,{i,j}}
+#define pip pair<int, pair<int,int>>
+pair<int,int> move0[4] = {{-1,0}, {0,-1}, {0,1}, {1,0}}; // edge
+int n, m, a[1005][1005], d[1005][1005];
+
+void input(){
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= m; j++){
+            cin >> a[i][j];
+        }
+    }
+}
+
+void Dijkstra(){
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= m; j++){
+            d[i][j] = 1e9;
+        }
+    }
+    d[1][1] = a[1][1]; // chi phí của đỉnh [1][1]
+    priority_queue<pip, vector<pip>, greater<pip>> q;
+    q.push({a[1][1], {1,1}});
+    while (!q.empty()){
+        auto it = q.top(); q.pop();
+        int i = it.second.first, j = it.second.second;
+        int w = it.first;
+        if (w > d[i][j]) continue;
+        for (int k = 0; k < 4; k++){
+            int i1 = i + move0[k].first;
+            int j1 = j + move0[k].second;
+            if (d[i1][j1] > d[i][j] + a[i1][j1]){
+                d[i1][j1] = d[i][j] + a[i1][j1];
+                q.push({d[i1][j1], {i1,j1}});
+            }
+        }
+    }
+    cout << d[n][m];
+}
+
+int main(){
+    input();
+    Dijkstra();
+}
