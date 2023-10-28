@@ -1,0 +1,35 @@
+Link Submit: https://codeforces.com/problemset/problem/1020/B
+
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> adj[1005];
+int res, n, d[1005];
+
+void input(){
+    cin >> n;
+    for (int i = 1; i <= n; i++){
+        int x; cin >> x;
+        adj[i].push_back(x);
+    }
+}
+
+void dfs(int u){
+    d[u]++;
+    if (d[u] == 2) res = u;
+    else {
+        for (int v : adj[u]){
+            dfs(v);
+        }
+    }
+
+}
+
+int main(){
+    input();
+    for (int i = 1; i <= n; i++){
+        memset(d, 0, sizeof(d));
+        dfs(i);
+        cout << res << " ";
+    }
+}
