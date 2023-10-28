@@ -25,7 +25,7 @@ void BellMan_Ford(int s){
 
     // Lập n - 1 lần
     // Lập tất cả các cạnh
-    for (int i = 0; i < n - 1; i++){
+    for (int i = 1; i <= n - 1; i++){
         for (auto e : dscanh){
             int u = e.x, v = e.y, w = e.w;
             if (d[u] < 1e9){
