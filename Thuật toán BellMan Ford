@@ -26,11 +26,10 @@ void BellMan_Ford(int s){
     // Lập n - 1 lần
     // Lập tất cả các cạnh
     for (int i = 0; i < n - 1; i++){
-        for (int j = 0; j < m; j++){
-            edge tmp = dscanh[j];
-            int x = tmp.x, y = tmp.y, w = tmp.w;
-            if (d[x] < 1e9){
-                d[y] = min(d[y], d[x] + w);
+        for (auto e : dscanh){
+            int u = e.x, v = e.y, w = e.w;
+            if (d[u] < 1e9){
+                d[v] = min(d[v], d[u] + w);
             }
         }
     }
