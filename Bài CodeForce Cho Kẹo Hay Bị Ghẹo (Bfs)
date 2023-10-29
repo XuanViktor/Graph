@@ -1,0 +1,65 @@
+Chàaaaaa một mùa Halloween lại đang cận kề! Tụi nhóc trong xóm nhỏ Mely đang muốn rủ nhau chơi trò "cho kẹo hay bị ghẹo". Ở đây có n
+ nhà được đánh số từ 1
+ đến n
+. Tuy nhiên thì đường xá ở xóm này hơi khó đi chút xíu và cũng chưa có không khí của Halloween nữa.
+
+Vì thế, các phụ huynh ở đây đã bắt tay vào trang trí và cải tạo lại các con đường cho các bạn nhỏ của chúng ta. Đầu tiên có n−1
+ số nguyên dương a1,a2,⋯,an−1
+. Với mỗi i
+ mà 1≤i≤n−1
+ điều kiện 1≤ai≤n−i
+ được đảm bảo. Tiếp đó, các phụ huynh đã trang trí n−1
+ con đường, được đánh số từ 1 đến n−1
+. Con đường thứ i
+ (1≤i≤n−1
+) kết nối giữa nhà i
+ và nhà (i+ai)
+, tụi nhỏ có thể di chuyển từ nhà i
+ đến nhà (i+ai)
+ sử dụng con đường thứ i
+. Tuy nhiên thì đây chỉ là những con đường một chiều, điều đó có nghĩa là không thể di chuyển từ nhà (i+ai)
+ tới nhà i
+ sử dụng con đường thứ i
+. Dễ dàng thấy được rằng với điều kiện 1≤ai≤n−i
+ tụi nhỏ không thể nào đi ra khỏi xóm nhỏ này.
+
+Hiện tại tụi nhóc đang đứng ở nhà 1
+ và muốn di chuyển đến nhà t
+ để xin kẹo. Tuy nhiên thì tui nhỏ không biết có thể đến đó được hay không. Bạn hãy giúp tui nhóc biết xem có thể đến nhà t
+ mà chỉ sử dụng các con đường mà phụ huynh đã trang trí hay không nha.
+
+Input
+Dòng đầu tiên chứa 2 số nguyên n
+ (3≤n≤3×104
+) và t
+ (2≤t≤n
+) — số lượng nhà trong xóm Mely, và ngôi nhà tụi nhóc trong xóm muốn đến để xin kẹo.
+
+Dòng thứ 2 chứa n−1
+ số nguyên a1,a2,⋯,an−1
+ (1≤ai≤n−i
+). Điều kiện được đảm bảo rằng nếu sử dụng những con đường này tụi nhỏ sẽ không bị lạc ra khỏi ngoài xóm Mely được.
+
+Output
+Nếu tụi nhỏ có thể đến nhà t
+ xin kẹo sử dụng những con đường mà phụ huynh đã trang trí in ra "YES". Trường hợp ngược lại in ra"NO".
+
+Examples
+inputCopy
+7 5
+1 2 1 1 1 1
+outputCopy
+YES
+inputCopy
+9 3
+1 2 1 2 1 1 1 1
+outputCopy
+NO
+Note
+Trong ví dụ đầu tiên, tụi nhỏ sẽ đi qua được các nhà: 1,2,4,5
+; do đó có thể thành công xin kẹo ở nhà 4
+.
+
+Trong ví dụ số 2, những nhà có thể đi qua là: 1,2,4,6,7,8,9
+; vì thế tụi nhóc không thể đến nhà 5
+, nơi mà tụi nhỏ muốn đến để xin kẹo.
