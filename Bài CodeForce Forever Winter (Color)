@@ -1,0 +1,43 @@
+Link Submit: https://codeforces.com/contest/1829/problem/F
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, m;
+vector<int> adj[300];
+
+void solve(int tc) {
+    cin >> n >> m;
+    
+    // Xóa danh sách kề của mỗi đỉnh
+    for (int i = 1; i <= n; i++) {
+        adj[i].clear();
+    }
+
+    for (int i = 1; i <= m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    int cnt = 0;
+    for (int i = 1; i <= n; i++) {
+        cnt += (adj[i].size() == 1);
+    }
+
+    int x = m - cnt;
+    int y = m / x - 1;
+
+    cout << x << " " << y << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1;
+    cin >> t;
+    for (int i = 1; i <= t; i++) {
+        solve(i);
+    }
+}
