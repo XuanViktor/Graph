@@ -1,0 +1,113 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX 10
+bool check = true;
+
+typedef struct GRAPH {
+    int n; // so dinh do thi
+    int a[MAX][MAX]; // ma tra ke
+} DOTHI;
+
+struct Stack {
+    int array[100];
+    int size;
+};
+
+int DocMaTranKe(const char TenFile[], DOTHI& g) {
+    FILE* f;
+    f = fopen(TenFile, "rt");
+    if (f == NULL) {
+        printf("Khong mo duoc file\n");
+        return 0;
+    }
+    fscanf(f, "%d", &g.n);
+    for (int i = 0; i < g.n; i++) {
+        for (int j = 0; j < g.n; j++) {
+            fscanf(f, "%d", &g.a[i][j]);
+        }
+    }
+    fclose(f);
+    return 1;
+}
+
+void Init_Stack(Stack& stack) {
+    stack.size = 0;
+}
+
+void Input_Stack(Stack& stack, int value) {
+    if (stack.size < 100) {
+        stack.array[stack.size] = value;
+        stack.size++;
+    }
+}
+
+void TimDuong(int i, DOTHI& g, Stack& stack) {
+    for (int j = 0; j < g.n; j++) {
+        if (g.a[i][j] != 0) {
+            g.a[i][j] = g.a[j][i] = 0; 
+            TimDuong(j, g, stack);
+        }
+    }
+    Input_Stack(stack, i);
+}
+
+int degree(DOTHI& g, int v) {
+    int bac = 0;
+    for (int i = 0; i < g.n; i++) {
+        if (g.a[v][i] != 0)
+            bac++;
+    }
+    return bac;
+}
+
+void Euler(DOTHI g) {
+    int i, j;
+    int x;
+    for (int i = 0; i < g.n; i++) {
+        if (degree(g, i) % 2 != 0) {
+            check = false; 
+            return;
+        }
+        else{
+        	x = i;
+		}
+    }
+
+    DOTHI temp = g;
+    Stack stack;
+    Init_Stack(stack);
+    TimDuong(x, temp, stack);
+
+    for (int i = 0; i < temp.n; i++) {
+        for (int j = 0; j < temp.n; j++) {
+            if (temp.a[i][j] != 0 || temp.a[j][i] != 0) { 
+                check = false; 
+                return;
+            }
+        }
+    }
+    if (stack.array[0] != stack.array[stack.size - 1]) {
+        check = false; 
+        return;
+    }
+
+    printf("\nChu Trinh Euler: ");
+    while (stack.size != 0) {
+        printf("%d ", stack.array[--stack.size]); 
+    }
+}
+
+int main() {
+    DOTHI g;
+    char inputfile[256];
+    printf("Nhap ten tap tin du lieu do thi: ");
+    scanf("%s", inputfile);
+    if (DocMaTranKe(inputfile, g) == 1) {
+        printf("Da lay thong tin do thi tu file thanh cong. \n\n");
+        Euler(g);
+        if (!check) { 
+            printf("\nKhong co chu trinh Euler"); 
+        }
+    }
+}
