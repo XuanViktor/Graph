@@ -98,6 +98,47 @@ void Euler(DOTHI g) {
     }
 }
 
+
+void DuongDi(DOTHI g) {
+    int i, j;
+    int x = 0;
+    int dem = 0;
+    for (int i = 0; i < g.n; i++) {
+        if (degree(g, i) % 2 != 0) {
+            ++dem;
+        	x = i;
+        }
+    }
+    
+    if (dem != 2) {
+    	check = false;
+    	return;
+	}
+
+    DOTHI temp = g;
+    Stack stack;
+    Init_Stack(stack);
+    TimDuong(x, temp, stack);
+
+    for (int i = 0; i < temp.n; i++) {
+        for (int j = 0; j < temp.n; j++) {
+            if (temp.a[i][j] != 0 || temp.a[j][i] != 0) { 
+                check = false; 
+                return;
+            }
+        }
+    }
+    if (stack.array[0] == stack.array[stack.size - 1]) {
+        check = false; 
+        return;
+    }
+
+    printf("\nDuong Di Euler: ");
+    while (stack.size != 0) {
+        printf("%d ", stack.array[--stack.size]); 
+    }
+}
+
 int main() {
     DOTHI g;
     char inputfile[256];
@@ -107,7 +148,7 @@ int main() {
         printf("Da lay thong tin do thi tu file thanh cong. \n\n");
         Euler(g);
         if (!check) { 
-            printf("\nKhong co chu trinh Euler"); 
+            printf("\nKhong co duong di Euler"); 
         }
     }
 }
