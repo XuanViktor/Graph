@@ -1,0 +1,152 @@
+#include <stdio.h>
+
+#define MAX 20
+
+int LuuVet[MAX];
+int ChuaXet[MAX];
+
+typedef struct GRAPH{
+	int n;
+	int a[MAX][MAX];
+}DOTHI;
+
+struct QUEUE{
+	int size;
+	int array[MAX];
+};
+
+int DocMaTranKe(const char TenFile[], DOTHI &g){
+	FILE* f;
+	f = fopen(TenFile, "rt");
+	if (f == NULL){
+		printf("khong mo duoc file \n");
+		return 0;
+	}
+	fscanf(f, "%d", &g.n);
+	for (int i = 0; i < g.n; i++){
+		for (int j = 0; j < g.n; j++){
+			fscanf(f,"%d", &g.a[i][j]);
+		}
+	}
+	fclose(f);
+	return 1;
+}
+
+void XuatMaTranKe(DOTHI g){
+	printf("So dinh cua do thi la %d \n", g.n);
+	printf("Ma tran ke cua do thi la: \n");
+	for (int i = 0; i < g.n; i++){
+		printf("\t");
+		for (int j = 0; j < g.n; j++){
+			printf("%4d", g.a[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+void KhoiTaoQueue(QUEUE &Q){
+	Q.size = 0;
+}
+
+int DayGiaTriVaoQueue(QUEUE &Q, int value){
+	
+	if (Q.size < MAX){
+		Q.array[Q.size++] = value;
+		return 1;
+	}
+	return 0;
+}
+
+int LayGiaTriRaKhoiQueue(QUEUE &Q, int &value){
+	if (Q.size <= 0) return 0;
+	value = Q.array[0];
+	
+	for (int i = 0; i < Q.size - 1; i++){
+		Q.array[i] = Q.array[i + 1];
+	}
+	Q.size--;
+	return 1;
+}
+
+int KiemTraQueueRong(QUEUE Q){
+	return Q.size <= 0;
+}
+
+void BFS(int v, GRAPH g){
+	QUEUE Q;
+	KhoiTaoQueue(Q);
+	
+	DayGiaTriVaoQueue(Q,v);
+	while (!KiemTraQueueRong(Q)){
+		LayGiaTriRaKhoiQueue(Q,v);
+		ChuaXet[v] = 1;
+		
+		for (int u = 0; u < g.n; u++){
+			if (g.a[v][u] != 0 && ChuaXet[u] == 0){
+				DayGiaTriVaoQueue(Q, u);
+				
+				if (LuuVet[u] == -1){
+					LuuVet[u] = v;
+				}
+			}
+		}
+	}
+}
+
+void Duyet(int S, int F, GRAPH g){
+	for (int i = 0; i < g.n; i++){
+		LuuVet[i] = -1;
+		ChuaXet[i] = 0;
+	}
+	
+	BFS(S,g);
+	
+	if (ChuaXet[F] == 1){
+		printf("Duong di tu dinh [%d] den dinh [%d] la: \n\t",S,F);
+		printf("%d",F);
+		int i = LuuVet[F];
+		while (i != -1){
+			printf("<- %d", i);
+			i = LuuVet[i];
+		}
+		printf("\n");
+	}
+	else{
+		printf("Khong co duong di tu dinh [%d] den dinh [%d] \n", S,F);
+	}
+}
+
+int nhapDinh(DOTHI & g, const char * tb){
+	int value, done = 0;
+	while (!done){
+		fflush(stdin);
+		printf("%s [0..%d] (-1 = dung): ",tb, g.n-1);
+		scanf("%d", &value);
+		
+		if (value == -1) return -1;
+		done = (value >= 0 && value <= g.n-1);
+	}
+	return value;
+}
+
+int main(){
+	DOTHI g;
+	char inputfile[256];
+	printf("Nhap ten tap tin du lieu do thi: ");
+	scanf("%s", inputfile);
+	if (DocMaTranKe(inputfile,g) == 1){
+		XuatMaTranKe(g);
+		int s, f;
+		s = nhapDinh(g, "Nhap dinh bat dau");
+		if (s != -1){
+			f = nhapDinh(g, "Nhap dinh ket thuc");
+		}
+		if (s != -1 && f != -1){
+			Duyet(s,f,g);
+		}
+	}
+	return 0;
+}
+
+
+
