@@ -1,0 +1,127 @@
+Hệ Thống Mạng
+
+Input Format
+Khu Công Nghệ Cao trường Đại Học có trang bị hệ thống mạng máy tính Casio, bao gồm N máy tính và M cáp kết nối một số cặp máy tính. 
+Các máy tính được đánh chỉ số từ 1 đến N, các dây cáp nối được đánh chỉ số từ 1 đến M.
+
+Trong bài giảng về chuyên đề thành phần liên thông trên đồ thị cho học sinh đội tuyển Olympic giáo sư đưa ra bài toán nhằm kiểm tra về độ tin cậy của mạng bằng 
+một loạt các thí nghiệm trên mạng máy tính, mỗi thí nghiệm thực hiện 3 thao tác theo tứ tự sau.
+
+- Tạm thời ngắt kết nối các dậy cáp có chỉ số từ l đến r.
+- Đếm số lượng các thành phần máy tính liên thông trong mạng được xác định tại thời điểm đó.
+- Kết nối lại các dậy cáp bị ngắt kế nối có chỉ số từ l đến r.
+
+Quy ước: Một máy tính không kết nối với máy tính nào cũng được coi là một thành phần liên thông.
+
+Yêu cầu: Với mỗi cặp chỉ số dây cáp l, r giáo sư đưa ra, các bạn hãy cùng các đội tuyển Olympic trường thực nghiệm thí nghiệm trên
+
+Constraints
+1 <= N, M <= 10000
+1 <= K <= 100
+1 <= l <= r <= M
+
+Input Format
+Dòng đầu tiên chứa hai số nguyên N và M
+M dòng tiếp theo mỗi dòng chứa hai số nguyên u,v thể hiện máy tính u kết nối với máy tính v trong mảng
+Dòng tiếp theo chứa số nguyên k là số lượng thí nghiệm
+K dòng tiếp theo, mỗi dòng chứa hai số nguyên l,r thể hiện một thí nghiệm trên máy tính.
+
+Output Format
+Đưa ra 1 nếu có thể chia tập con thành K tập thỏa mãn yêu cần bài toán ngược lại đưa ra 0.
+
+Input
+6 5
+1 2
+5 4
+2 3
+3 1
+3 6
+6
+1 3
+2 5
+1 5
+5 5
+2 4
+3 3
+Output
+4
+5
+6
+3
+4
+2
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define mod 1000000007
+#define faster ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
+
+void FileIO(){
+    #ifndef ONLINE_JUDGE
+    freopen("In.txt", "r", stdin);
+    freopen("Out.txt", "w", stdout);
+    #endif 
+    faster;
+}
+
+int n, m;
+vector<int> adj[100000];
+bool visited[100000];
+vector<pair<int,int>> edge;
+
+void input(){
+    cin >> n >> m;
+    for (int i = 0; i < m; i++){
+        int x, y; cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+        edge.push_back({x,y});
+    }
+}
+
+void dfs(int u){
+    visited[u] = true;
+    for (int v : adj[u]){
+        if (!visited[v]){
+            dfs(v);
+        }
+    }
+}
+
+int main() {
+    FileIO();
+    input();
+
+    int t; cin >> t;
+    while (t--){
+        int l, r; cin >> l >> r;
+        for (int i = l; i <= r; i++){
+            int x = edge[i-1].first;
+            int y = edge[i-1].second;
+            // Xóa phần tử y khỏi vector adj[x]
+            adj[x].erase(remove(begin(adj[x]),end(adj[x]), y), end(adj[x]));
+            // Xóa phần tử x khỏi vector adj[y]
+            adj[y].erase(remove(begin(adj[y]),end(adj[y]), x), end(adj[y]));
+        }
+        int cnt = 0;
+        for (int i = 1; i <= n; i++){
+            if (!visited[i]){
+                dfs(i);
+                ++cnt;
+            }
+        }
+        cout << cnt << endl;
+
+        // phục hồi
+        memset(visited, false, sizeof(visited));
+        for (int i = l; i <= r; i++){
+            int x = edge[i-1].first;
+            int y = edge[i-1].second;
+            adj[x].push_back(y);
+            adj[y].push_back(x);
+        }
+    }
+    return 0;
+}
