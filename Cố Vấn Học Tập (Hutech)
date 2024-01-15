@@ -40,6 +40,38 @@ Explaintion
 SV1 có thể liên hệ với SV2 và SV2 có thể liên lạc với SV1, SV3. SV3 có thể liên hệ với SV2,4 và SV4 có thể liên lạc với SV3. SV5 có thể liên hệ được với SV7, SV6
 và SV6 có thể liên hệ với SV5. SV7 có thể liên hệ được với SV5. SV8 có thể liên hệ với SV9 và SV9 có thể với SV8. Như vậy thầy trung chỉ cần gửi tin nhắn với 4 SV (VD: 1,5,8,10)
 
+int n, m, s;
+bool visited[1000001];
+vector<int> adj[1000001];
 
+void dfs(int u){
+    visited[u] = true;
+    for (int v : adj[u]){
+        if (!visited[v]){
+            dfs(v);
+        }
+    }
+}
+
+void input(){
+    cin >> n >> m;
+    for (int i = 0; i < m; i++){
+        int x, y; cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+}
+
+int main(){
+    input();
+    int cnt = 0;
+    for (int i = 1; i <= n; i++){
+        if (!visited[i]){
+            dfs(i);
+            ++cnt;
+        }
+    }
+    cout << cnt;
+}
 
 
