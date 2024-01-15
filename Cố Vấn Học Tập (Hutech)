@@ -1,0 +1,45 @@
+Cố Vấn Học Tập
+
+Input Format
+Khi trở thành Tân Sinh Viên K22 Khoa Công Nghệ Thông Tin, các sinh viên và tập thể lớp được yêu cầu cao về sự độc lập, 
+chủ động trong xây dựng kế hoặc cho tất cả công việc liên quan đến quá trình học tập và sinh hoạt của mình trong suốt thời gian học. 
+Trong quá trình học tập, nếu sinh viên có khó khăn hoặc chưa định hướng được vấn đề liên quan đến kế hoặc học tập, định hướng chuyên ngành .. 
+thì đã có đội ngũ thầy cô giáo của khoa đặc biệt là cố vấn học tập (CVHT) sẽ luôn đồng hành cùng các bạn.
+
+VÓi một lớp gồm N sinh viên (từ 1 đến N) ở những buổi đầu của học kì I năm 1, CVHT rất khó khăn để có thể truyền tải được các nội dung quan trọng tới toàn bộ sinh viên của lớp. 
+Giả sử thầy Trung có một thông tin rất quan trọng cần thông báo tới tất cả các sinh viên trong lớp. Để tiết kiệm thời gian, 
+thầy Trung chỉ nhắn tin tới 1 số bạn Sinh Viên, các bạn Sinh Viên nhận được thông tin sẽ tiếp tiếp chuyển tiếp nội dung này cho tất cả các bạn mà có thể liên lạc được, 
+Quá trình được tiếp tục lặp lại cho đến khi tất cả Sinh Viên trong lớp đều nhận được thông tin.
+
+Yêu cầu: Cho biết số lượng Sinh Viên ít nhất mà Trung cần nhắn tin để thông tin có thể tới được cả lớp.
+
+Constraints
+1 <= N, K <= 10^7
+1 <= i, j <= N
+
+Input Format
+- Dòng 1: Số nguyên N và K cách nhau bằng kí tự khoảng trắng. N là số lượng sinh viên của lớp và K là tổng số dòng thể hiện các sinh viên có thể liên lạc được cho nhau
+
+- K dòng tiếp theo. Mỗi dòng gồm 2 số nguyên dương i và j (cách nhau khoảng trắng): Cho biết sinh viên i có thể liên lạc với sinh viên thứ j (và ngược lại)
+
+Output Format
+- Một dòng duy nhất ghi một số nguyên là số lượng Sinh Viên ít nhất cần tìm
+
+Input
+10 6
+1 2
+2 3
+3 4
+5 7
+8 9
+5 6
+Output
+4
+
+Explaintion
+SV1 có thể liên hệ với SV2 và SV2 có thể liên lạc với SV1, SV3. SV3 có thể liên hệ với SV2,4 và SV4 có thể liên lạc với SV3. SV5 có thể liên hệ được với SV7, SV6
+và SV6 có thể liên hệ với SV5. SV7 có thể liên hệ được với SV5. SV8 có thể liên hệ với SV9 và SV9 có thể với SV8. Như vậy thầy trung chỉ cần gửi tin nhắn với 4 SV (VD: 1,5,8,10)
+
+
+
+
