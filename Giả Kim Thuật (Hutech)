@@ -1,0 +1,120 @@
+Khi khai quật một di chỉ thời trung cổ, các nhà khảo cổ đào được n tấm bảng gốm (0 <= n <= 1000). 
+Giải mã văn bản ghi trên đó người ta hiểu rằng mỗi tấm mô tả một phản ứng điều chế chất B từ chất A. 
+Đó là thành tựu khoa học của các nhà giả kim thuật. Người ta không điều chế được vàng bằng các phản ứng hóa học, nhưng đã khám phá rất nhiều điều mới trong hóa học.
+
+Yêu cầu: Cho n thông báo dạng Chất i -> Chất j cho biết bằng một phản ứng hóa học có thể điều chế Chất j từ Chất i. 
+Hãy xác định xem từ Chất A ta có thể nhận được Chất B hay không. Nếu có thì chỉ ra số phản ứng tối thiểu cần thực hiện, trong trường hợp ngược lại đưa ra số -1.
+
+Các tên chất (Chất i, Chất j, Chất A, Chất B) có độ dài không quá 100 ký tự, bao gồm chữ cái la tinh hoa hoặc thường, các ký tự số. 
+Có phân biệt chữ hoa và chữ thường. Số lượng các chất khác nhau không quá 100.
+
+Dữ liệu vào
+Dòng đầu tiên chứa số nguyên n.
+Mỗi dòng trong n dòng tiếp theo chứa một thông báo dạng Chất i -> Chất j
+Dòng thứ n + 2 chứa xâu ký tự xác định tên Chất A
+Dòng thứ n + 3 chứa xâu ký tự xác định tên Chất B
+
+Dữ liệu ra
+Đưa ra một số nguyên là số phản ứng tối thiểu cần thực hiện, hoặc ngược lại in ra số -1
+
+Input
+5
+Aqua -> AquaVita
+AquaVita -> PhilosopherStone
+AquaVita -> Argentum
+Argentum -> Aurum
+AquaVita -> Aurum
+Aqua
+Aurum
+
+Output
+2
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define mod 1000000007
+#define faster ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
+
+void FileIO(){
+    #ifndef ONLINE_JUDGE
+    freopen("In.txt", "r", stdin);
+    freopen("Out.txt", "w", stdout);
+    #endif 
+    faster;
+}
+
+int m;
+int start, ed;
+vector<vector<string>> p;
+set<string> se;
+map<string,int> mp;
+vector<int> adj[1000001];
+bool visited[1000001];
+int value[1000001];
+
+void solve() {
+    cin >> m;
+    cin.ignore(); 
+    for (int i = 0; i < m; i++) {
+        string s;
+        getline(cin, s);
+        stringstream ss(s);
+        string word;
+        vector<string> tmp; 
+        while (ss >> word) {
+            if (word != "->") {
+                se.insert(word);
+                tmp.push_back(word);
+            }
+        }
+        p.push_back(tmp);
+    }
+
+    int key = 1;
+    for (string x : se){
+        mp[x] = key++;
+    }
+
+    string s,t; cin >> s >> t;
+    start = mp[s], ed = mp[t];
+}
+
+void input(){
+    for (int i = 0; i < (int)p.size(); i++){
+        for (int j = 0; j < 1; j++){
+            adj[mp[p[i][j]]].push_back(mp[p[i][j+1]]);
+        }
+    }
+}
+
+void bfs(int u){
+    queue<int> q; // Khởi tạo bằng hàng đợi
+    q.push(u); // cho đỉnh bắt đầu là u
+    visited[u] = true; // đánh dấu thăm đỉnh đó
+    // duyệt hàng đợi khi hết đỉnh
+    while (!q.empty()){
+        int v = q.front(); // lấy đỉnh ở đầu hàng đời
+        q.pop(); // xóa đỉnh đầu hàng đợi
+        //cout << v << " "; // in đỉnh đã duyệt
+        for (int x : adj[v]){ // duyệt các đỉnh kề của u
+            if (!visited[x]){ // nếu chưa thăm 
+                value[x] = value[v] + 1;
+                q.push(x); // thêm vào hàng đợi
+                visited[x] = true; // đánh dấu đỉnh kề đã thăm
+            }
+        }
+    }
+}
+
+int main() {
+    FileIO();
+    solve();
+    input();
+
+    bfs(start);
+    if (value[ed] != 0) cout << value[ed];
+    else cout << -1;
+    return 0;
+}
