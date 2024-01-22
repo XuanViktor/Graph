@@ -1,0 +1,104 @@
+Vừa qua, sinh viên Khoa Công Nghệ thông tin Trường Đại học Công nghệ TPHCM đã tham gia tranh tài tại cuộc thi Olympic Tin học Sinh Viên Việt Nam lần thứ 32 diễn ra tại Huế. 
+Với nền tảng kiến thức vững chắc cùng bản lĩnh tự tin, các đội thi đã xuất sắc gặt hái được nhiều thành tích đáng nể
+
+Sau khi đạt giải trong kì thi lập trình Olympic Tin học sinh viên, ban giám hiệu nhà trường quyết định cho đội tuyển một chuyền bay miễn phí đến thành phố S, 
+chuyến bay có thể đi qua một chiều hoặc nhiều thành phố. Tát nhiên, mọi người trong đội đều muốn đi qua nhiều thành phố nhất có thể. 
+Bạn hãy giúp đội tuyển chọn ra đường bay cho chuyến đi này nhé.
+
+Dữ liệu vào 
+Dòng đầu tiên gồm 2 số n và m: Số lượng các thành phố và số lượng các chuyến bay. Các thành phống được đánh số từ 1 đến n, trong đó TP.HCM là 1 và thành phố S là n.
+
+m dòng tiếp theo là chuyến bay, mỗi chuyến bao gồm hai số a và b: có chuyến bay một chiều từ thành phố a đến thành phố b.
+
+Dữ liệu ra
+Dòng đầu tiên là số thành phố tối đa mà đội tuyển có thể đi qua
+Dòng thứ hai là 2 tuyến đường mà đội sử dụng
+
+Lưu ý: Nếu không có đường nào để đến được thành phố S từ TPHCM thì hãy in ra -1
+
+Input
+10 10
+2 6
+1 2
+4 6
+5 6
+2 5
+7 8
+6 10
+1 10
+3 5
+4 9
+
+Output
+5
+1 2 5 6 10
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define mod 1000000007
+#define faster ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
+
+void FileIO(){
+    #ifndef ONLINE_JUDGE
+    freopen("In.txt", "r", stdin);
+    freopen("Out.txt", "w", stdout);
+    #endif 
+    faster;
+}
+
+int n, k;
+vector <int> adj[1000005];
+int cnt[1000005];
+int par[1000005] = {0};
+
+void dfs(int u) {
+    int maxCount = 0;
+    int maxCountVertex = -1; // cập nhật cuối cùng
+
+    for (int neighbor : adj[u]) {
+        if (cnt[neighbor] == 0) {
+            dfs(neighbor);
+        }
+        if (maxCount < cnt[neighbor]) {
+            maxCount = cnt[neighbor];
+            maxCountVertex = neighbor;
+        }
+    }
+
+    if (maxCount == 0) cnt[u] = -1;
+    else {
+        cnt[u] = maxCount + 1;
+        par[u] = maxCountVertex;
+    }
+}
+
+int main() {
+    faster;
+    FileIO();
+    cin >> n >> k;
+    cnt[n] = 1;
+    for (int i = 0; i < k; ++i) {
+        int a, b; cin >> a >> b;
+        adj[a].push_back(b);
+    }
+
+    dfs(1);
+    if (cnt[1] == -1) {
+        cout << -1 << endl;
+    } else {
+        cout << cnt[1] << endl;
+        int id = 1;
+        while (1) {
+            cout << id << ' ';
+            if (id == n) break;
+            id = par[id];
+        }
+    }
+    return 0;
+}
+
+
+
+
