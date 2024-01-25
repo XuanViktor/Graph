@@ -27,6 +27,7 @@ Output:
 
 Link: https://cses.fi/problemset/task/1691/
 
+
 #include <bits/stdc++.h>
 using namespace std;
  
@@ -84,8 +85,6 @@ void euler(){
             // delete
             adj[x].erase(y);
             adj[y].erase(x);
-            degree[x]--;
-            degree[y]--;
         }
         else{
             st.pop();
@@ -93,13 +92,11 @@ void euler(){
         }
     }
  
-    // sau khi tìm đường đi nếu còn đỉnh nào 
-    // chưa kiểm tra tới chứng tỏ không có chu trình
-    for (int i = 1; i <= n; i++){
-        if (degree[i] != 0){
-            cout << "IMPOSSIBLE";
-            return;
-        }
+    // Nếu các đỉnh có bậc lớn hơn 0 trong đồ thị không nằm cùng một TPLT 
+    // thì không tồn tại đáp án
+    if ((int)euler_cycle.size() < m + 1){
+        cout << "IMPOSSIBLE";
+        return;
     }
     reverse(begin(euler_cycle), end(euler_cycle));
     for (int x : euler_cycle) cout << x << " ";
