@@ -26,23 +26,6 @@ Input:
 Output:
 1 3 1 2 4 2 5
 
-#include <bits/stdc++.h>
-using namespace std;
-
-#define ll long long
-#define mod 1000000007
-#define faster ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
-
-const int MAXN = 1005;
-
-void FileIO(){
-    #ifndef ONLINE_JUDGE
-    freopen("In.txt", "r", stdin);
-    freopen("Out.txt", "w", stdout);
-    #endif 
-    faster;
-}
-
 int n, m;
 set<int> adj[1000001];
 vector<pair<int, int>> degree; // first ra : second vao
@@ -91,8 +74,6 @@ void euler(){
 
             // delete
             adj[x].erase(y);
-            degree[x].first--;
-            degree[y].second--;
         }
         else{
             st.pop();
@@ -100,15 +81,12 @@ void euler(){
         }
     }
 
-    // sau khi tìm đường đi, nếu còn đỉnh nào 
-    // chưa kiểm tra tới thì chứng tỏ không có chu trình
-    for (int i = 1; i <= n; i++){
-        if (degree[i].first != 0 || degree[n].second != 0){
-            cout << "IMPOSSIBLE";
-            return;
-        }
+    // Nếu các đỉnh có bậc lớn hơn 0 trong đồ thị không nằm cùng một TPLT 
+    // thì không tồn tại đáp án
+    if ((int)euler_cycle.size() < m + 1){
+        cout << "IMPOSSIBLE";
+        return;
     }
-
     reverse(begin(euler_cycle), end(euler_cycle));
 
     // điều kiện phụ của bài toán Teleporters Path 
