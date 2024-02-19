@@ -1,0 +1,71 @@
+Cho đồ thị có hướng G = (V,E) được biểu diễn dưới dạng danh sách cạnh. Hãy tìm đường đi theo thuật toán DFS từ đỉnh s tới đỉnh t. 
+Trong quá trình mở rộng của thuật toán DFS, luôn ưu tiên mở rộng đỉnh có số thứ tự nhỏ hơn
+
+Input 
+Dòng đầu tiên là 4 số n,m,s,t tương đương với số lượng đỉnh, cạnh của đồ thị, đỉnh bắt đầu và đỉnh kết thúc. Các đỉnh của đồ thị được đánh số từ 1 đến n
+M dòng tiếp theo mỗi dòng chứa đỉnh u,v (u != v) tương ứng với một cạnh của đồ thị
+
+Output
+In ra đường đi từ s tới t nếu có đường đi, trường hợp không có in ra -1
+
+Input format
+5 8 1 2
+5 3
+5 2
+4 1
+4 3
+2 5
+3 4
+1 5
+3 1
+
+Output format
+1 3 5 2
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, m, s,t;
+vector<int> adj[10000001];
+bool visited[10000001];
+int parent[100000001];
+
+void inp(){
+    cin >> n >> m >> s >> t;
+    for (int i = 0; i < m; i++){
+        int u, v; cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    for (int i = 1; i <= n; i++){
+        sort(begin(adj[i]), end(adj[i]));
+    }
+}
+
+void dfs(int u){
+    visited[u] = true;
+    for (int v : adj[u]){
+        if (!visited[v]){
+            parent[v] = u;
+            dfs(v);
+        }
+    }
+}
+
+int main(){
+    inp();
+    dfs(s);
+    if (visited[t]){
+        vector<int> path;
+        while (t != s){
+            path.push_back(t);
+            t = parent[t];
+        }
+        path.push_back(s);
+        reverse(begin(path), end(path));
+        for (int x : path){
+            cout << x << " ";
+        }
+    }
+    else cout << -1;
+}
