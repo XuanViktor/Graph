@@ -1,1 +1,74 @@
+Cho đồ thị có hướng G = (V,E) được biểu diễn dưới dạng danh sách cạnh. Hãy tìm đường đi theo thuật toán DFS từ đỉnh s tới đỉnh t. 
+Trong quá trình mở rộng của thuật toán DFS, luôn ưu tiên mở rộng đỉnh có số thứ tự nhỏ hơn
 
+Input 
+Dòng đầu tiên là 4 số n,m, tương đương với số lượng đỉnh, cạnh của đồ thị, đỉnh bắt đầu và đỉnh kết thúc. Các đỉnh của đồ thị được đánh số từ 1 đến n
+M dòng tiếp theo mỗi dòng chứa đỉnh u,v (u != v) tương ứng với một cạnh của đồ thị
+M + 1 Dòng là số lượng truy vấn k
+k dòng tiếp theo gồm đỉnh s và đỉnh t kiểm tra.
+
+Output
+In ra k dòng nếu có đường đi từ đỉnh s đến đỉnh t thì in ra YES, ngược lại in 
+
+Input format
+5 3
+5 4
+4 1
+4 3
+3
+4 5
+4 2
+3 4
+
+
+Output format
+YES
+NO
+YES
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, m, k;
+vector<int> adj[10000001];
+bool visited[10000001];
+int Comp[10001];
+int cnt = 0;
+
+void inp(){
+    cin >> n >> m;
+    for (int i = 0; i < m; i++){
+        int u, v; cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    for (int i = 1; i <= n; i++){
+        sort(begin(adj[i]), end(adj[i]));
+    }
+}
+
+void dfs(int u){
+    visited[u] = true;
+    Comp[u] = cnt;
+    for (int v : adj[u]){
+        if (!visited[v]){
+            dfs(v);
+        }
+    }
+}
+
+int main(){
+    inp();
+    for (int i = 1; i <= n; i++){
+        if (!visited[i]){
+            ++cnt;
+            dfs(i);
+        }
+    }
+    cin >> k;
+    for (int i = 0; i < k; i++){
+        int x, y; cin >> x >> y;
+        if (Comp[x] == Comp[y]) cout << "YES" << endl;
+        else cout << "NO" << endl;
+    }
+}
