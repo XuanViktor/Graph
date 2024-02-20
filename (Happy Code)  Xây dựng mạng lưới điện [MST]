@@ -1,0 +1,135 @@
+Mô tả yêu cầu
+Đất nước Việt Nam gồm N thành phố được đánh số từ 1 đến N. Có M đường dây dẫn có thể xây dựng được, đường dây dẫn thứ i kết nối hai thành phố Ui và Vi với chi phí xây dựng là Wi
+Chính phủ đất nước Việt Nam có kế hoạch xây dựng lưới điện quốc gia để cung cấp điện cho toàn bộ các thành phố. Họ dự định sẽ đặt hai trạm phát điện tại hai thành phố khác nhau, và xây dựng
+một số đường dây dẫn để các thành phố đều được cung cấp điện. Một thành phố u được cung cấp điện nếu thành phố u được đặt trạm phát điện, hoặc có một đường dây dẫn nối thành phố u và 
+một thành phố khác được cung cấp điện.
+
+Chính phủ đề xuất Q phương án đặt hai trạm phát điện. Với phương án thứ i, hai trạm phát điện sẽ được đặt lần lượt tại hai thành phố Ai và Bi. Với mỗi phương án, họ cần tính tổng chi phí tối thiểu
+để xây dựng các đường dây dẫn sao cho các thành phố đều được cung cấp điện.
+
+Bạn, một lập trình viên xuất sắc của đất nước, được chính phủ tin cập và giao cho nhiệm vụ này. Hãy hoàn thành nó một cách xuất sắc nhé !
+
+Dữ liệu vào 
+  Dòng đầu tiên gồm 2 số N, M (1 <= N <= 4000, 1 <= M <= 400000) - số thành phố của đất nước Việt Nam và số đường dây thông qua các đường dây dẫn.
+  Dòng tiếp theo gồm một số nguyên Q (1 <= Q <= 200000) - số phương án của chính phủ đã đề xuất
+  Q dòng tiếp theo, mỗi dòng gồm 2 số nguyên Ai và Bi (1 <= Ai, Bi <= N, Ai # Bi) mô tả phương án thứ i
+
+Dữ liệu ra
+  Với mỗi phương án, in ra một số nguyên duy nhất là tổng chi phí tối thiểu xây dựng các đường dây dẫn sao cho mỗi thành phố đều được cung cấp điện
+
+Input format
+6 8
+1 2 4
+1 3 3
+1 4 4
+1 5 2
+2 4 6
+3 5 3
+3 4 4
+4 6 5
+2
+4 5
+6 4
+
+Output format
+14
+13
+
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define faster ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
+
+
+const int maxn = 4003;
+const int maxm = 400005;
+
+struct edge {
+    int u, v, w;
+};
+
+vector<edge> e(maxm);
+int parent[maxn], sz[maxn];
+vector<pair<int, ll>> a[maxn];
+int f[maxn][maxn];
+int n,m;
+
+void init(int n) {
+    for (int i = 1; i <= n; i++) {
+        parent[i] = i; // khoi tao cac dinh i co id la i
+        sz[i] = 1;     // kich thuoc tung dinh la 1
+    }
+}
+
+int Find(int u) {
+    if (u == parent[u]) return u;
+    else return parent[u] = Find(parent[u]);
+}
+
+bool Union(int u, int v) {
+    u = Find(u);
+    v = Find(v);
+    if (u == v)
+        return false; // neu u == v chung to do thi la chu trinh
+    if (sz[u] < sz[v]) { // dung de luc nao cung cho u lon hon v cho de xu ly
+        swap(u, v);      //u la thang co size lon hon
+    }
+    sz[u] += sz[v];   // them tp v vao tp u ghi gop
+    parent[v] = u;    // va gan lai cho thang co parent be la u cho v
+    return true;
+}
+
+void inp(){
+    cin >> n >> m;
+    for (int i = 1; i <= m; ++i) {
+        cin >> e[i].u >> e[i].v >> e[i].w;
+    }
+}
+
+void dfs(int src, int des, int p, ll w) {
+    // src đỉnh nguồn | des đỉnh đích là đỉnh đang được xem xét trong lúc duyệt DFS.
+    // p là đỉnh cha đỉnh trước đó của đỉnh con
+    // w là trọng số hiện tại sữa p và des
+    f[src][des] = w;
+    for (auto x : a[des]) {
+        int b = x.first; // b là đỉnh kề tiếp theo của des.
+        ll y = x.second; // y là trọng số của cạnh giữa des và b.
+        if (b != p)
+            dfs(src, b, des, max(y, w));
+    }
+}
+
+long long Kruskal(int m) {
+    sort(e.begin() + 1, e.begin() + m + 1, [](edge &a, edge &b) { 
+        return a.w < b.w; 
+    });
+    long long MST = 0;
+    for (int i = 1; i <= m; ++i) {
+        int u = e[i].u, v = e[i].v;
+        if (Union(u, v)) {
+            a[u].push_back({v, e[i].w});
+            a[v].push_back({u, e[i].w});
+            MST += e[i].w;
+        }
+    }
+
+    return MST;
+}
+
+int main() {
+    faster;
+    inp();
+    init(n);
+    long long MST = Kruskal(m);
+
+    for (int i = 1; i <= n; i++)
+        dfs(i, i, 0, 0);
+
+    int q;
+    cin >> q;
+    while (q--) {
+        int x, y; cin >> x >> y;
+        cout << MST - f[x][y] << '\n';
+    }
+    return 0;
+}
