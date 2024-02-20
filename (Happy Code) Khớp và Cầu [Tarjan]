@@ -1,0 +1,86 @@
+GRAPH_ - Tìm khớp và cầu (Cơ bản)
+Hiện tại, bài tập này đã có trên online judge chính thức của VNOI, bạn có thể truy cập ở đây: https://oj.vnoi.info/problem/graph_
+
+
+Xét đơn đồ thị vô hướng G = (V, E) có n(1<=n<=10000) đỉnh và m(1<=m<=50000) cạnh. 
+Người ta định nghĩa một đỉnh gọi là khớp nếu như xoá đỉnh đó sẽ làm tăng số thành phần liên thông của đồ thị. 
+Tương tự như vậy, một cạnh được gọi là cầu nếu xoá cạnh đó sẽ làm tăng số thành phần liên thông của đồ thị.
+
+Vấn đề đặt ra là cần phải đếm tất cả các khớp và cầu của đồ thị G.
+
+Input
++Dòng đầu: chứa hai số tự nhiên n,m.
++M dòng sau mỗi dòng chứa một cặp số (u,v) (u<>v, 1<=u<=n, 1<=v
+10 12
+1 10
+10 2
+10 3
+2 4
+4 5
+5 2
+3 6
+6 7
+7 3
+7 8
+8 9
+9 7
+
+Output
+Gồm một dòng duy nhất ghi hai số, số thứ nhất là số khớp, số thứ hai là số cầu của G
+4 3
+
+#include <bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+int n, m, timer = 0;
+vector<int> adj[10005];
+int disc[10005], low[10005];
+bool visited[10005];
+vector<pair<int,int>> bridge;
+set<int> AP;
+
+void nhap(){
+    cin >> n >> m;
+    for(int i = 0; i < m; i++){
+        int x, y; cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    memset(visited, false, sizeof(visited));
+    memset(visited, false, sizeof(AP));
+}
+
+void DFS(int u, int par){
+    visited[u] = true;
+    disc[u] = low[u] = ++timer;
+    int child = 0;
+    for(int v : adj[u]){
+        if(v == par) continue; 
+        if(!visited[v]){
+            DFS(v, u);
+            ++child;
+            low[u] = min(low[u], low[v]);
+            if(par != -1 && disc[u] <= low[v]){
+                AP.insert(u);
+            }
+            if(disc[u] < low[v]){
+                bridge.push_back({u, v});
+            }
+        }
+        else{
+            low[u] = min(low[u], disc[v]);
+        }
+    }
+    if(par == -1 && child > 1) AP.insert(u);
+}
+
+int main(){
+    nhap();
+    for(int i = 1; i <= n; i++){
+        if(!visited[i]){
+            DFS(i, -1);
+        }
+    }
+    cout << AP.size() << " " << bridge.size();
+}
