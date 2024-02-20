@@ -49,20 +49,7 @@ void input(){
 }
 
 void dfs(int u, int next){
-    visited[u] = true;
-    int flag = 0;
-    for (int v : adj[u]){
-        if (!visited[v]){
-            flag = 1;
-            if (d[v] == 1 && next + 1 <= m){
-                dfs(v, next + 1);
-            }
-            else if (d[v] == 0){
-                dfs(v, 0);
-            }
-        }
-    }
-    if (!flag) res++;
+
 }
 
 int main(){
