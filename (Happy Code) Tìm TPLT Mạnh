@@ -1,0 +1,96 @@
+TJALG - Tìm TPLT mạnh
+Hiện tại, bài tập này đã có trên online judge chính thức của VNOI, bạn có thể truy cập ở đây: https://oj.vnoi.info/problem/tjalg
+
+
+Cho đồ thị G(V,E) có hướng n (1<=n<=10^4)  đỉnh m (1<=m<=10^5) cung, Hãy đếm số thành phần liên thông mạnh của G.
+
+Input
++Dòng đầu tiên là n,m.
+
++M dòng tiếp theo mô tả một cung của G.
+
+Output
+Gồm một dòng duy nhất là số TPLT mạnh.
+
+Example
+Input:
+
+3 2
+1 2
+2 3
+
+Output:
+
+3
+
+Input:
+
+3 3
+1 2
+2 3
+3 1
+
+Output
+
+1
+
+
+int n, m;
+vector<int> adj[10005], T_adj[10005];
+bool visited[10005];
+stack<int> st;
+
+void inp(){
+    cin >> n >> m;
+    for (int i = 0; i < m; i++){
+        int x,y; cin >> x >> y;
+        adj[x].push_back(y);
+        T_adj[y].push_back(x);
+    }
+}
+
+void dfs1(int u){
+    visited[u] = true;
+    for (int v : adj[u]){
+        if (!visited[v]){
+            dfs1(v);
+        }
+    }
+    st.push(u);
+}
+
+void dfs2(int u){
+    visited[u] = true;
+    for (int v : T_adj[u]){
+        if (!visited[v]){
+            dfs2(v);
+        }
+    }
+}
+
+void Kosaraju(){
+    // B1 goi dfs1 va luu vao stack
+    for (int i = 1; i <= n; i++){
+        if (!visited[i]){
+            dfs1(i);
+        }
+    }
+
+    // B3 pop tung dinh trong stack va dfs2
+    int cnt = 0;
+    memset(visited, false, sizeof(visited));
+    while (!st.empty()){
+        int u = st.top(); st.pop();
+        if (!visited[u]){
+            ++cnt;
+            dfs2(u);
+        }
+    }
+    cout << cnt;
+}
+
+int main(){
+    faster;
+    inp();
+    Kosaraju();
+}
