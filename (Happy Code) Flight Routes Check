@@ -5,6 +5,7 @@ After this, there are m lines describing the flights. Each line has two integers
 Output
 Print "YES" if all routes are possible, and "NO" otherwise. In the latter case also print two cities a and b such that you cannot travel from city a to city b. 
 If there are several possible solutions, you can print any of them.
+Link: https://cses.fi/problemset/task/1682/
 
 Constraints
 1 <= n <= 10^5
