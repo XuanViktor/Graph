@@ -1,0 +1,18 @@
+Kiểm tra tính liên thông mạnh
+
+Cho đồ thị có hướng G = <V,E> được biểu diễn dưới dạng sanh sách cạnh. Hãy kiểm tra xem đồ thị có liên thông mạnh hay không ?
+Input
+Dòng đầu tiên đưa vào T là số lượng bộ test
+Những dòng tiếp theo đưa vào các bộ test. Mỗi bộ test gồm 2 dòng
+Dòng đầu tiên đưa vào hai số v và e tương ứng với số đỉnh và số cạnh
+Dòng tiếp theo đừa vào các bộ đôi u và v tứng ứng với một cạnh của đồ thị.
+
+Output 
+Đưa ra YES hoặc NO theo từng dòng tương ứng với test là liên thông mạnh hoặc 
+không liên thông mạnh
+
+Constrains
+1 <= T <= 100
+1 <= V <= 10^3
+1 <= E <= V*(V-1)/2
+
