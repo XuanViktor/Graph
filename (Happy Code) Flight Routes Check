@@ -1,0 +1,91 @@
+There are n cities and m flight connections. Your task is to check if you can travel from any city to any other city using the available flights.
+Input
+The first input line has two integers n and m: the number of cities and flights. The cities are numbered 1,2,\dots,n.
+After this, there are m lines describing the flights. Each line has two integers a and b: there is a flight from city a to city b. All flights are one-way flights.
+Output
+Print "YES" if all routes are possible, and "NO" otherwise. In the latter case also print two cities a and b such that you cannot travel from city a to city b. 
+If there are several possible solutions, you can print any of them.
+
+Constraints
+1 <= n <= 10^5
+1 <= m <= 2.10^5
+1 <= a,b <= n
+
+Example
+Input:
+4 5
+1 2
+2 3
+3 1
+1 4
+3 4
+
+Output:
+NO
+4 2
+
+int n, m;
+vector<int> adj[100005], T_adj[100005];
+bool visited[100005];
+stack<int> st;
+ 
+void inp(){
+    cin >> n >> m;
+    for (int i = 0; i < m; i++){
+        int x,y; cin >> x >> y;
+        adj[x].push_back(y);
+        T_adj[y].push_back(x);
+    }
+}
+ 
+void dfs1(int u){
+    visited[u] = true;
+    for (int v : adj[u]){
+        if (!visited[v]){
+            dfs1(v);
+        }
+    }
+    st.push(u);
+}
+ 
+void dfs2(int u){
+    visited[u] = true;
+    for (int v : T_adj[u]){
+        if (!visited[v]){
+            dfs2(v);
+        }
+    }
+}
+ 
+void Kosaraju(){
+    // B1 goi dfs1 va luu vao stack
+    for (int i = 1; i <= n; i++){
+        if (!visited[i]){
+            dfs1(i);
+        }
+    }
+ 
+    // B3 pop tung dinh trong stack va dfs2
+    int cnt = 0;
+    vector<int> a;
+    memset(visited, false, sizeof(visited));
+    while (!st.empty()){
+        int u = st.top(); st.pop();
+        if (!visited[u]){
+            ++cnt;
+            a.push_back(u);
+            dfs2(u);
+        }
+    }
+    if (cnt == 1) cout << "YES";
+    else {
+        cout << "NO" << endl;
+        cout << a[1] << " " << a[0];
+    }
+}
+ 
+int main(){
+    faster;
+    inp();
+    Kosaraju();
+}
