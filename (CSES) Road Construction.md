@@ -1,23 +1,26 @@
-Bài Lát Đường
+## Bài Lát Đường
 ở vùng đất có n thành phố và ban đầu không có đường giữa chúng. Tuy nhiên
 mỗi ngày một con đường mới sẽ được xây dựng và sẽ có tổng cộng m con đường.
 Một cụm thành phố là một nhóm các thành phố trong đó có một tuyến đường giữa hai thành
 phố bất kỳ bằng cách sử dụng các con đường. Sau mỗi ngày, nhiệm vụ của bạn là tìm ra
 số lượng cụm thành phố và kích thước của cụm thành phố lớn nhất.
 
-Dòng đầu tiên có hai số nguyên n và m. số thành phố và con đường
-Sau đó m dòng miêu tả các con đường mới. Mỗi dòng là a và b
-một con đường được xây dựng từ tp a đến tp b.
-Bạn có thể cho rằng mọi con đường sẽ được xây dựng giữa hai thành phố khác nhau
+### Đầu Vào
+- Dòng đầu tiên có hai số nguyên n và m. số thành phố và con đường
+- Sau đó m dòng miêu tả các con đường mới. Mỗi dòng là a và b một con đường được xây dựng từ tp a đến tp b. Bạn có thể cho rằng mọi con đường sẽ được xây dựng giữa hai thành phố khác nhau
 
-In m dòng. Thông tin cần thiết sau mỗi ngày
+### Đầu Ra
+- In m dòng. Thông tin cần thiết sau mỗi ngày
 
-Input    OutPut
- 5 3      4 2
- 1 2      3 3
- 1 3      2 3
- 4 5
+| Input | Output |
+|-------|--------|
+| 5 3   | 4 2    |
+| 1 2   | 3 3    |
+| 1 3   | 2 3    |
+| 4 5   |        |
 
+
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -61,3 +64,4 @@ int main(){
 		cout << cnt << " " << max_city << endl;
 	}
 }
+```
