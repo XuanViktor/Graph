@@ -16,14 +16,23 @@ Mạng của Syrjälä có n máy tính và m kết nối. Nhiệm vụ của b�
 ### Ví dụ
 ### Đầu vào:
 5 5
+
 1 2
+
 1 3
+
 1 4
+
 2 3
+
 5 4
+
 ### Đầu ra:
+
 3
+
 1 4 5
+
 
 ```cpp
 const int maxN = 100001;
