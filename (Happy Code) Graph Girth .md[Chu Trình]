@@ -1,16 +1,27 @@
 Link: https://cses.fi/problemset/task/1707
 
-Given an undirected graph, your task is to determine its girth, i.e., the length of its shortest cycle.
-Input
-The first input line has two integers n and m: the number of nodes and edges. The nodes are numbered 1,2,\dots,n.
-After this, there are m lines describing the edges. Each line has two integers a and b: there is an edge between nodes a and b.
-You may assume that there is at most one edge between each two nodes.
-Output
-Print one integer: the girth of the graph. If there are no cycles, print -1.
-Constraints
+# Bài toán: Chu vi ngắn nhất của đồ thị (Girth)
 
-1 \le n \le 2500
-1 \le m \le 5000
+## Đề bài
+Cho một đồ thị vô hướng, nhiệm vụ của bạn là xác định **chu vi ngắn nhất** của đồ thị (girth), tức là độ dài chu trình ngắn nhất trong đồ thị.
+
+### **Dữ liệu vào**
+- Dòng đầu tiên chứa hai số nguyên `n` và `m`: số lượng đỉnh và cạnh trong đồ thị. Các đỉnh được đánh số từ `1, 2, ..., n`.
+- `m` dòng tiếp theo, mỗi dòng chứa hai số nguyên `a` và `b`: biểu diễn một cạnh giữa hai đỉnh `a` và `b`.
+- Giả sử rằng giữa hai đỉnh bất kỳ có không quá một cạnh.
+
+### **Dữ liệu ra**
+- In ra một số nguyên:
+  - **Chu vi của đồ thị** (độ dài chu trình ngắn nhất).
+  - Nếu đồ thị không có chu trình nào, in ra `-1`.
+
+### **Ràng buộc**
+- \(1 \leq n \leq 2500\)
+- \(1 \leq m \leq 5000\)
+
+## Ví dụ
+### **Dữ liệu vào**
+
 
 Example
 Input:
