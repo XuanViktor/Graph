@@ -98,4 +98,24 @@ int main(){
     return 0;
 }
 
+Cách 2
+void dfs(int u){
+    ++cnt;
+    visited[u] = true;
+    for (int x : adj[u]){
+        if (!visited[x]){
+            dfs(x);
+        }
+    }
+}
 
+int main(){
+    int canh = 0;
+    for (int i = 1; i <= n; i++){
+        if (!used[i]){
+            cnt = 0;
+            dfs(i);
+            canh += cnt*(cnt-1)/2;
+        }
+    }
+}
