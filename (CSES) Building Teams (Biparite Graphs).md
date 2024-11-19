@@ -17,8 +17,11 @@ Có n học sinh trong lớp của Uolevi và m tình bạn giữa họ. Nhiệm
 ### Ví dụ
 ### Đầu vào:
 5 3
+
 1 2
+
 1 3
+
 4 5
 
 ### Đầu ra
