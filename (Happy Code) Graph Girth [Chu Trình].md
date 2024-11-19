@@ -25,17 +25,25 @@ Cho một đồ thị vô hướng, nhiệm vụ của bạn là xác định **
 
 Example
 Input:
+
 5 6
+
 1 2
+
 1 3
+
 2 4
+
 2 5
+
 3 4
+
 4 5
 
 Output:
 3
 
+```javascript
 int tmp = 1e9, n, m;
 vector<int> adj[MAXN];
 vector<bool> visited(MAXN, false);
@@ -88,3 +96,4 @@ int main(){
     if (tmp == 1e9) cout << -1;
     else cout << tmp;
 }
+```
