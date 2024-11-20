@@ -1,18 +1,43 @@
-Your task is to deliver mail to the inhabitants of a city. For this reason, you want to find a route whose starting and ending point are the post office, and that goes through every street exactly once.
+# Nhiệm vụ
 
-### Input
-- The first input line has two integers n and m: the number of crossings and streets. The crossings are numbered 1,\,2,\ldots,\,n, and the post office is located at crossing 1.
-- After that, there are m lines describing the streets. Each line has two integers a and b: there is a street between crossings a and b. All streets are two-way streets.
-- Every street is between two different crossings, and there is at most one street between two crossings.
+Bạn cần thực hiện việc giao thư đến cư dân trong một thành phố. Vì lý do này, bạn cần tìm một hành trình mà điểm bắt đầu và kết thúc đều ở bưu điện, đồng thời đi qua **mỗi con đường chính xác một lần**.
 
-### Output
-- Print all the crossings on the route in the order you will visit them. You can print any valid solution.
-- If there are no solutions, print "IMPOSSIBLE".
+---
 
-### Constraints
-- $(2\leq n\leq 10^5)$
-- $(1\leq m\leq 2.10^5)$
-- $(1\leq a,\,b\leq n)$
+## Dữ liệu vào
+
+1. Dòng đầu tiên chứa hai số nguyên `n` và `m`:  
+   - `n`: số lượng ngã tư (đỉnh).  
+   - `m`: số lượng con đường (cạnh).
+
+2. Các ngã tư được đánh số từ `1, 2, ..., n`, và bưu điện nằm tại ngã tư số `1`.
+
+3. Sau đó có `m` dòng, mỗi dòng chứa hai số nguyên `a` và `b`, biểu thị rằng có một con đường hai chiều giữa ngã tư `a` và `b`.
+
+**Lưu ý**:
+- Mỗi con đường nối giữa hai ngã tư khác nhau.
+- Không có hai con đường trùng nhau nối cùng một cặp ngã tư.
+
+---
+
+## Dữ liệu ra
+
+1. Nếu có giải pháp, in ra tất cả các ngã tư trên hành trình theo thứ tự bạn sẽ đi qua.  
+2. Nếu không có giải pháp, in ra **`IMPOSSIBLE`**.
+
+---
+
+## Yêu cầu của bài toán
+
+- Hành trình phải là **chu trình Euler**:
+  - Đi qua **mỗi cạnh đúng một lần**.
+  - Điểm bắt đầu và kết thúc phải là **đỉnh 1**.
+
+---
+
+## Ví dụ
+
+### Dữ liệu vào 1
 
 ### Example
 ### Input:
