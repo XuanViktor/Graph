@@ -1,18 +1,43 @@
-A game has n levels and m teleportes between them. You win the game if you move from level 1 to level n using every teleporter exactly once.
-Can you win the game, and what is a possible way to do it?
-### Input
-- The first input line has two integers n and m: the number of levels and teleporters. The levels are numbered 1,2,\dots,n.
-- Then, there are m lines describing the teleporters. Each line has two integers a and b: there is a teleporter from level a to level b.
-- You can assume that each pair (a,b) in the input is distinct.
-### Output
-- Print m+1 integers: the sequence in which you visit the levels during the game. You can print any valid solution.
-- If there are no solutions, print "IMPOSSIBLE".
+# Mô tả bài toán
 
-### Constraints
+Một trò chơi có **n** cấp độ và **m** cổng dịch chuyển giữa chúng. Bạn sẽ thắng trò chơi nếu bạn di chuyển từ cấp độ **1** đến cấp độ **n** bằng cách sử dụng **mỗi cổng dịch chuyển chính xác một lần**.  
 
-- $(2 \leq n \leq 10^5)$
-- $(1 \leq m \leq 2.10^5)$
-- $(1 \leq a,b \leq n)$
+Bạn có thể thắng trò chơi không? Nếu có, hãy tìm một cách để thực hiện điều đó.
+
+---
+
+## Dữ liệu vào
+
+- Dòng đầu tiên chứa hai số nguyên **n** và **m**:  
+  - **n**: số lượng cấp độ.  
+  - **m**: số lượng cổng dịch chuyển.
+
+- Tiếp theo là **m** dòng, mỗi dòng chứa hai số nguyên **a** và **b**, nghĩa là có một cổng dịch chuyển từ cấp độ **a** đến cấp độ **b**.
+
+**Lưu ý**:
+- Mỗi cặp **(a, b)** trong dữ liệu vào là khác nhau.
+
+---
+
+## Dữ liệu ra
+
+- Nếu có cách thắng trò chơi, in ra **m+1** số nguyên: thứ tự các cấp độ mà bạn đi qua trong trò chơi.  
+- Nếu không có cách, in ra **`IMPOSSIBLE`**.
+
+---
+
+## Ràng buộc
+
+- \( 2 \leq n \leq 10^5 \)  
+- \( 1 \leq m \leq 2 \times 10^5 \)  
+- \( 1 \leq a, b \leq n \)  
+
+---
+
+## Ví dụ
+
+### Dữ liệu vào 1
+
 
 ### Example
 ### Input:
